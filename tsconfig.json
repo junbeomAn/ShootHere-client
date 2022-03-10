@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "noImplicitAny": true,
+    "module": "es6",
+    "jsx": "react",
+    "allowJs": true,
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "noEmitOnError": true,
+    "removeComments": true
+  },
+  "exclude": [
+    "node_modules",
+    "./futsal-server",
+    "./futsal-backend",
+    "./webpack.config.js",
+    "./dist"
+  ]
+}
