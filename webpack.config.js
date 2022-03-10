@@ -31,7 +31,9 @@ module.exports = {
     //   // NODE_ENV: JSON.stringify('development'),
     //   BASE_URL: JSON.stringify('http://localhost:3000'),
     // }),
-    new Dotenv(),
+    new Dotenv({
+      systemvars: true,
+    }),
   ],
   output: {
     filename: '[name].bundle.js',
