@@ -27,10 +27,6 @@ module.exports = {
       template: './index.html',
       favicon: './assets/image/soccer-ball-favicon.png',
     }),
-    // new webpack.EnvironmentPlugin({
-    //   // NODE_ENV: JSON.stringify('development'),
-    //   BASE_URL: JSON.stringify('http://localhost:3000'),
-    // }),
     new Dotenv({
       systemvars: true,
     }),
