@@ -10,16 +10,30 @@ import { modalStyles, closeBtnStyles, ModalBox } from './Modal.styles';
 import { IModalContainer } from './Modal.entity';
 import { stopPropagation } from '../utils';
 
+const { useEffect, useContext } = React;
+
 const ModalContainer: React.FunctionComponent<IModalContainer> = ({
   children,
   width,
   height,
 }) => {
-  const { isOpen, setIsOpen } = React.useContext(ModalContext);
+  const { isOpen, setIsOpen } = useContext(ModalContext);
 
   const onOuterClick = () => {
     setIsOpen(false);
   };
+
+  const onEscapePress = (e: KeyboardEvent) => {
+    if (e.key === 'Escape') {
+      setIsOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('keyup', onEscapePress);
+
+    return () => window.removeEventListener('keyup', onEscapePress);
+  }, []);
 
   return (
     isOpen && (
