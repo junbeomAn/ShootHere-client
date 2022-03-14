@@ -1,4 +1,4 @@
-import { css } from '@emotion/react';
+import { css, keyframes } from '@emotion/react';
 
 import color from '../commonStyles/color';
 
@@ -76,8 +76,30 @@ export const inputSubmitStyles = css`
   color: ${color.textGrey};
   cursor: pointer;
   transition: all 0.2s ease-in-out;
+  font-size: 13px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
   &:hover {
     color: ${color.textWhite};
     background-color: ${color.hoverGrey};
   }
 `;
+
+const rotateAnimationKeyframe = keyframes`
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+`;
+
+export const inputSpinnerStyles = css({
+  width: '13px',
+  height: '13px',
+  border: `2px solid ${color.hoverGrey}`,
+  borderTopColor: `${color.textGrey}`,
+  borderRadius: '50%',
+  animation: `0.7s ${rotateAnimationKeyframe} infinite linear`,
+});

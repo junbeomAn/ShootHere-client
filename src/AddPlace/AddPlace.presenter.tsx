@@ -3,6 +3,7 @@
 import { jsx } from '@emotion/react';
 import * as React from 'react';
 import { MdOutlineUploadFile } from 'react-icons/md';
+import { BeatLoader } from 'react-spinners';
 
 import Input from '../Input/Input.presenter';
 
@@ -12,11 +13,13 @@ import {
   errorMessageStyles,
   uploadAreaStyles,
   uploadContainerStyles,
+  inputSpinnerStyles,
 } from './AddPlace.styles';
 
 import { inputSubmitStyles } from './AddPlace.styles';
 import { uploadInputStyles } from './AddPlace.styles';
 import { uploadImagePreviewStyles } from './AddPlace.styles';
+import { css } from '@emotion/react';
 
 const futsalInfoFields = {
   placeName: '이름',
@@ -59,6 +62,31 @@ const AddPlacePresenter = ({
     />
   ));
 
+  const getUploadableImages = () =>
+    imageAsset?.map((item) => (
+      <img key={item._id} src={item?.url} alt='upload-photo' />
+    ));
+
+  const getUploadState = () => (
+    <h3>
+      {isUploading ? (
+        <BeatLoader size={10} />
+      ) : (
+        '클릭해서 이미지를 업로드 하세요'
+      )}
+    </h3>
+  );
+
+  const getSubmitButton = () =>
+    isLoading ? (
+      <div css={inputSubmitStyles}>
+        <div css={inputSpinnerStyles}></div>
+        {/* <BeatLoader size={10} /> */}
+      </div>
+    ) : (
+      <input css={inputSubmitStyles} type='submit' value={'등록'} />
+    );
+
   return (
     <form css={addPlaceStyles} onSubmit={handleSubmit}>
       <h2>풋살장 정보 등록</h2>
@@ -71,26 +99,15 @@ const AddPlacePresenter = ({
         <h3>이미지 업로드</h3>
         <div css={uploadImagePreviewStyles}>
           {imageAsset.length === 0 && <span>업로드할 이미지가 없습니다.</span>}
-          {imageAsset?.map((item) => (
-            <img key={item._id} src={item?.url} alt='upload-photo' />
-          ))}
+          {getUploadableImages()}
         </div>
         <div css={uploadAreaStyles}>
           <MdOutlineUploadFile />
-          <h3>
-            {isUploading
-              ? '이미지를 업로드하는 중입니다...'
-              : '클릭해서 이미지를 업로드 하세요'}
-          </h3>
+          {getUploadState()}
         </div>
         <input css={uploadInputStyles} type='file' onChange={onChange} />
       </label>
-
-      <input
-        css={inputSubmitStyles}
-        type='submit'
-        value={isLoading ? '등록중..' : '등록'}
-      />
+      {getSubmitButton()}
     </form>
   );
 };
