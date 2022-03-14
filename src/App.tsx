@@ -45,7 +45,6 @@ export default function App() {
             }
           />
           <Route path='/addPlace' element={<AddPlace />} />
-          <Route path='/login' element={<Login />} />
           <Route path='/*' element={<NotFound />} />
         </Routes>
       </div>

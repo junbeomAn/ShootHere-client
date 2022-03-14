@@ -40,7 +40,8 @@ const Login = () => {
   };
 
   const responseGoogleOnFailure = (response: GoogleLoginResponse) => {
-    navigate('/login');
+    console.log(response);
+    // navigate('/login');
   };
 
   React.useEffect(() => {
