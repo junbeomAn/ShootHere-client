@@ -19,6 +19,8 @@ export interface IPlaceListPresenter extends IPlaceListContainer {
   handlePlaceClick: (placeId: string, placeName: string) => void;
   images: IPlaceImage[];
   placeName: string;
+  loadingRef: React.MutableRefObject<HTMLDivElement>;
+  isLastPage: boolean;
 }
 
 export interface IPhoto extends SanityDocument {

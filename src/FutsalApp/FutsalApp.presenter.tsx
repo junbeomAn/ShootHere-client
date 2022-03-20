@@ -13,8 +13,9 @@ import Filter from '../Filter/Filter.container';
 import Modal from '../Modal/Modal.container';
 
 import { IFutsalAppPresenter } from './FutsalApp.entity';
-import { AppLeftBoxStyle, FutsalAppStyle } from './FutsalApp.styles';
+import { AppLeftBoxStyle, FutsalAppStyle, NavStyle } from './FutsalApp.styles';
 import { ModalContextProvider } from '../context/modalContext';
+import { ListPageContextProvider } from '../context/listPageContext';
 
 const FutsalAppPresenter = ({
   onChange,
@@ -25,15 +26,7 @@ const FutsalAppPresenter = ({
 }: IFutsalAppPresenter) => {
   return (
     <div css={FutsalAppStyle}>
-      <nav
-        css={css`
-          position: absolute;
-          top: -80px;
-          right: 10px;
-          display: flex;
-          align-items: center;
-        `}
-      >
+      <nav css={NavStyle}>
         <Link to='/addPlace'>
           <CustomButton
             css={css`
@@ -55,7 +48,9 @@ const FutsalAppPresenter = ({
           </Modal>
         </ModalContextProvider>
         <ModalContextProvider>
-          <PlaceList data={data} isLoading={isLoading} />
+          <ListPageContextProvider>
+            <PlaceList data={data} isLoading={isLoading} />
+          </ListPageContextProvider>
         </ModalContextProvider>
       </section>
       {!isMobile && <Map />}

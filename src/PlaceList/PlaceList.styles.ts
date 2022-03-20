@@ -25,3 +25,10 @@ export const emptyResultStyles = css`
   text-align: center;
   margin-top: 100px;
 `;
+
+export const spinnerCustomContainerStyles = css`
+  display: flex;
+  width: 100%;
+  height: 1px;
+  justify-content: center;
+`;
