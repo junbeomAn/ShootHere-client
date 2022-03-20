@@ -7,6 +7,7 @@ import AddPlacePresenter from './AddPlace.presenter';
 import { client } from '../api/client';
 
 import { IAddPlaceData } from './AddPlace.entity';
+import { Axios } from '../api/request';
 
 const { useState } = React;
 
@@ -23,17 +24,26 @@ const AddPlace = () => {
     reset,
   } = useForm();
 
-  const onSubmit = (data: IAddPlaceData) => {
+  const onSubmit = async (data: IAddPlaceData) => {
     setIsLoading(true);
+    // data.address를 쿼리로하고 서버 /api/map/coords 로 요청 보내서
+    // 좌표 { x, y } 가져온다.
+    // new Place doc에 저장.
+    try {
+      const addrToCrdsUrl = `/api/map/coords?query=${data.address}`;
+      const {
+        data: { x, y },
+      } = await Axios.get(addrToCrdsUrl);
 
-    const newPlaceDoc = {
-      _type: 'place',
-      ...data,
-      minPrice: Number(data.minPrice),
-      maxPrice: Number(data.maxPrice),
-    };
-
-    client.create(newPlaceDoc).then((res) => {
+      const newPlaceDoc = {
+        _type: 'place',
+        ...data,
+        minPrice: Number(data.minPrice),
+        maxPrice: Number(data.maxPrice),
+        longitude: x,
+        latitude: y,
+      };
+      const res = await client.create(newPlaceDoc);
       const imageDoc = {
         _type: 'photo',
         place: {
@@ -49,13 +59,16 @@ const AddPlace = () => {
           _key: nanoid(),
         })),
       };
-      client.create(imageDoc).then((res) => {
-        reset();
-        setImageAsset([]);
-        setIsLoading(false);
-        alert('장소 등록이 완료되었습니다.');
-      });
-    });
+
+      await client.create(imageDoc);
+      reset();
+      setImageAsset([]);
+      setIsLoading(false);
+      alert('장소 등록이 완료되었습니다.');
+    } catch (err) {
+      alert('장소 등록 요청에 실패하였습니다.');
+      console.error(err);
+    }
   };
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {

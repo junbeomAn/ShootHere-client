@@ -6,20 +6,20 @@ import { MdOutlineUploadFile } from 'react-icons/md';
 import { BeatLoader } from 'react-spinners';
 
 import Input from '../Input/Input.presenter';
+import Spinner from '../Spinner/Spinner.presenter';
 
 import { IAddPlacePresenter } from './AddPlace.entity';
+
 import {
   addPlaceStyles,
   errorMessageStyles,
   uploadAreaStyles,
   uploadContainerStyles,
   inputSpinnerStyles,
+  inputSubmitStyles,
+  uploadInputStyles,
+  uploadImagePreviewStyles,
 } from './AddPlace.styles';
-
-import { inputSubmitStyles } from './AddPlace.styles';
-import { uploadInputStyles } from './AddPlace.styles';
-import { uploadImagePreviewStyles } from './AddPlace.styles';
-import { css } from '@emotion/react';
 
 const futsalInfoFields = {
   placeName: '이름',
@@ -29,6 +29,11 @@ const futsalInfoFields = {
   minPrice: '최소 대관료',
   maxPrice: '최대 대관료',
 };
+
+const IMAGE_UPLOAD_MSG = '클릭해서 이미지를 업로드 하세요';
+const ADD_PLACE_TITLE = '풋살장 정보 등록';
+const IMAGE_UPLOAD_TITLE = '이미지 업로드';
+const NO_IMAGE_MSG = '업로드할 이미지가 없습니다.';
 
 const AddPlacePresenter = ({
   register,
@@ -68,37 +73,31 @@ const AddPlacePresenter = ({
     ));
 
   const getUploadState = () => (
-    <h3>
-      {isUploading ? (
-        <BeatLoader size={10} />
-      ) : (
-        '클릭해서 이미지를 업로드 하세요'
-      )}
-    </h3>
+    <h3>{isUploading ? <BeatLoader size={10} /> : IMAGE_UPLOAD_MSG}</h3>
   );
 
   const getSubmitButton = () =>
     isLoading ? (
       <div css={inputSubmitStyles}>
-        <div css={inputSpinnerStyles}></div>
+        <Spinner />
         {/* <BeatLoader size={10} /> */}
       </div>
     ) : (
       <input css={inputSubmitStyles} type='submit' value={'등록'} />
     );
 
+  const getInputError = (error: string) => `${error} field is required.`;
+
   return (
     <form css={addPlaceStyles} onSubmit={handleSubmit}>
-      <h2>풋살장 정보 등록</h2>
-      {error && (
-        <span css={errorMessageStyles}>{error} field is required.</span>
-      )}
+      <h2>{ADD_PLACE_TITLE}</h2>
+      {error && <span css={errorMessageStyles}>{getInputError(error)}</span>}
       {inputFields}
 
       <label css={uploadContainerStyles}>
-        <h3>이미지 업로드</h3>
+        <h3>{IMAGE_UPLOAD_TITLE}</h3>
         <div css={uploadImagePreviewStyles}>
-          {imageAsset.length === 0 && <span>업로드할 이미지가 없습니다.</span>}
+          {imageAsset.length === 0 && <span>{NO_IMAGE_MSG}</span>}
           {getUploadableImages()}
         </div>
         <div css={uploadAreaStyles}>
