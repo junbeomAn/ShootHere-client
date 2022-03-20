@@ -7,7 +7,6 @@ import FutsalApp from './FutsalApp/FutsalApp.container';
 import AddPlace from './AddPlace/AddPlace.container';
 import NotFound from './NotFound/NotFound.presenter';
 import Logo from '../assets/image/logo_SH.png';
-import LogoMan from '../assets/image/logo_man.svg';
 
 import mq from './commonStyles/mediaQuery';
 import { UserContextProvider } from './context/userContext';
