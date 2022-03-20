@@ -21,17 +21,17 @@ const MapContainer: React.FunctionComponent = () => {
     goalLat: goalCoords.lat,
     goalLng: goalCoords.lng,
   });
-  // map에 destination 이름을 넣어줄까?
   const { isLoading: isMapLoading } = useMap(data, currentCoords);
 
   React.useEffect(() => {
     // place의 좌표값을 불러온다. api 요청
+    // 좌표값 불러오는 프로세스 삭제해도 됨.
     const getGoalCoords = async () => {
       if (!place) return;
       const cacheData = placeCache.current.get(place);
 
       if (!cacheData) {
-        const encodedQuery = encodeURI(place);
+        const encodedQuery = encodeURIComponent(place);
         const { data } = await Axios.get(
           `/api/map/coords?query=${encodedQuery}`
         );
