@@ -17,6 +17,14 @@ export const FutsalAppStyle = css`
   }
 `;
 
+export const NavStyle = css`
+  position: absolute;
+  top: -60px;
+  right: 10px;
+  display: flex;
+  align-items: center;
+`;
+
 export const AppLeftBoxStyle = css({
   display: 'flex',
   flexDirection: 'column',
