@@ -1,4 +1,4 @@
-import { css } from '@emotion/react';
+import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import color from '../commonStyles/color';
@@ -26,3 +26,21 @@ export const SpinnerMessageStyle = css`
   color: ${color.hardBlue}
   margin: 2px;
 `;
+
+const rotateAnimationKeyframe = keyframes`
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+`;
+
+export const LoadingSpinner = styled.div({
+  width: '13px',
+  height: '13px',
+  border: `2px solid ${color.hoverGrey}`,
+  borderTopColor: `${color.textGrey}`,
+  borderRadius: '50%',
+  animation: `0.7s ${rotateAnimationKeyframe} infinite linear`,
+});

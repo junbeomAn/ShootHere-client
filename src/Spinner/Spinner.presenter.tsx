@@ -1,18 +1,28 @@
 /** @jsx jsx */
-import { jsx } from '@emotion/react';
+/**@jsxFrag */
+
+import { jsx, CSSObject, css } from '@emotion/react';
+import { CSSInterpolation } from '@emotion/serialize';
 import * as React from 'react';
-import { BeatLoader } from 'react-spinners';
 
 import { ISpinnerPresenter } from './Spinner.entity';
 import { SpinnerContainer, SpinnerMessageStyle } from './Spinner.styles';
+import { LoadingSpinner } from './Spinner.styles';
 
-const Spinner = ({ message = '', absolute }: ISpinnerPresenter) => {
+export const SpinnerWithContainer = ({
+  message = '',
+  absolute,
+}: ISpinnerPresenter) => {
   return (
     <SpinnerContainer absolute={absolute}>
-      <BeatLoader />
+      <LoadingSpinner />
       <p css={SpinnerMessageStyle}>{message}</p>
     </SpinnerContainer>
   );
 };
+
+function Spinner({ style }: { style?: CSSObject }) {
+  return <LoadingSpinner css={css(style)} />;
+}
 
 export default Spinner;
