@@ -1,16 +1,17 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/react';
 import * as React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 
-import { PlaceContextProvider } from './context/placeContext';
 import FutsalApp from './FutsalApp/FutsalApp.container';
 import AddPlace from './AddPlace/AddPlace.container';
-import { Axios } from './api/request';
 import NotFound from './NotFound/NotFound.presenter';
-import Login from './Login/Login.container';
-import { UserContextProvider } from './context/userContext';
+import Logo from '../assets/image/logo_SH.png';
+import LogoMan from '../assets/image/logo_man.svg';
+
 import mq from './commonStyles/mediaQuery';
+import { UserContextProvider } from './context/userContext';
+import { PlaceContextProvider } from './context/placeContext';
 
 const AppStyle = css`
   display: flex;
@@ -20,21 +21,32 @@ const AppStyle = css`
   height: 100vh;
 `;
 
+const LogoBoxStyle = css`
+  cursor: pointer;
+  position: absolute;
+  top: 30px;
+  display: flex;
+  align-items: center;
+  ${mq.mobile} {
+    top: 0px;
+  }
+`;
+
+const LogoStyle = css`
+  width: 300px;
+  ${mq.mobile} {
+    width: 200px;
+  }
+`;
+
 export default function App() {
+  const navigate = useNavigate();
   return (
     <UserContextProvider>
       <div css={AppStyle}>
-        <h1
-          css={css`
-            position: absolute;
-            top: 30px;
-            ${mq.mobile} {
-              top: 0px;
-            }
-          `}
-        >
-          SHOOT HERE
-        </h1>
+        <div css={LogoBoxStyle} onClick={() => navigate('/')}>
+          <img src={Logo} css={LogoStyle} />
+        </div>
         <Routes>
           <Route
             path='/'
