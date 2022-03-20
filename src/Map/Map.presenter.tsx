@@ -5,7 +5,7 @@ import { css } from '@emotion/react';
 
 import { IMapPresenter } from './Map.entity';
 import { mapStyles } from './Map.styles';
-import Spinner from '../Spinner/Spinner.presenter';
+import { SpinnerWithContainer } from '../Spinner/Spinner.presenter';
 
 const MapPresenter = ({ isLoading }: IMapPresenter) => {
   return (
@@ -17,7 +17,9 @@ const MapPresenter = ({ isLoading }: IMapPresenter) => {
         `}
         id='map'
       ></div>
-      {isLoading && <Spinner absolute message={`Map is being loaded..`} />}
+      {isLoading && (
+        <SpinnerWithContainer absolute message={`Map is being loaded..`} />
+      )}
     </div>
   );
 };
