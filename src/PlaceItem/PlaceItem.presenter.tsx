@@ -2,6 +2,7 @@
 import { css, jsx } from '@emotion/react';
 import * as React from 'react';
 import { AiOutlineStar, AiFillStar } from 'react-icons/ai';
+import getDistance from 'geolib/es/getDistance';
 
 import CustomButton from '../CustomButton/CustomButton';
 import Modal from '../Modal/Modal.container';
@@ -10,7 +11,7 @@ import { client } from '../api/client';
 
 import { ModalContext, ModalContextProvider } from '../context/modalContext';
 
-import { IPlaceItem, ISaveButton } from './PlaceItem.entity';
+import { IPlaceItemPresenter, ISaveButton } from './PlaceItem.entity';
 import {
   rightBoxStyle,
   leftBoxStyle,
@@ -20,6 +21,7 @@ import {
 import { toPrice, stopPropagation } from '../utils';
 import { UserContext } from '../context/userContext';
 import { nanoid } from 'nanoid';
+import { meterToKilometer } from '../utils/index';
 
 const SaveButton = ({ isSaved, placeId }: ISaveButton) => {
   const [mouseOver, setMouseOut] = React.useState(false);
@@ -83,13 +85,14 @@ const SaveButton = ({ isSaved, placeId }: ISaveButton) => {
   );
 };
 
-const PlaceItemPresenter: React.FunctionComponent<IPlaceItem> = ({
+const PlaceItemPresenter = ({
   item,
   handleDirectionsClick,
   handlePlaceClick,
   isSaved,
   isSelected,
-}) => {
+  currentCoords,
+}: IPlaceItemPresenter) => {
   const {
     address,
     placeName,
@@ -99,6 +102,20 @@ const PlaceItemPresenter: React.FunctionComponent<IPlaceItem> = ({
     maxPrice,
     _id,
   } = item;
+
+  const distanceFromCurrentPosition: number = currentCoords.lat
+    ? getDistance(
+        {
+          longitude: item.longitude,
+          latitude: item.latitude,
+        },
+        {
+          longitude: currentCoords.lng,
+          latitude: currentCoords.lat,
+        },
+        0.1
+      )
+    : 0;
 
   return (
     <PlaceItem
@@ -117,13 +134,19 @@ const PlaceItemPresenter: React.FunctionComponent<IPlaceItem> = ({
         </div>
         <div className='left-box-item address'>
           <span>{item.address}</span>
-          <CustomButton
-            size='medium'
-            theme='primary'
-            onClick={stopPropagation(() => handleDirectionsClick(address))}
-          >
-            길찾기
-          </CustomButton>
+          <div>
+            <CustomButton
+              size='medium'
+              theme='primary'
+              onClick={stopPropagation(() => handleDirectionsClick(address))}
+            >
+              길찾기
+            </CustomButton>
+            {/* geolib 라이브러리로 현재 좌표에서 해당 좌표까지 직선 거리 구한다. */}
+            <span className='distance'>
+              {meterToKilometer(distanceFromCurrentPosition)}km
+            </span>
+          </div>
         </div>
       </div>
       <div css={rightBoxStyle}>

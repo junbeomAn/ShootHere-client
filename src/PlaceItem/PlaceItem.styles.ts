@@ -55,6 +55,9 @@ export const leftBoxStyle = css`
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    .distance {
+      margin-left: 15px;
+    }
   }
 
   ${mq.large} {

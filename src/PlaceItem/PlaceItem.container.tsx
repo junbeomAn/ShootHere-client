@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import PlaceItem from './PlaceItem.presenter';
 
+import { usePosition } from '../hooks';
 import { PlaceDispatchContext, PlaceContext } from '../context/placeContext';
 import { UserContext } from '../context/userContext';
 import { IPlaceItemContainer } from './PlaceItem.entity';
@@ -12,6 +13,7 @@ const PlaceItemContainer = ({
   item,
   handlePlaceClick,
 }: IPlaceItemContainer) => {
+  const currentCoords = usePosition();
   const setPlace = useContext(PlaceDispatchContext);
   const currentPlace = useContext(PlaceContext);
   const { user } = useContext(UserContext);
@@ -34,10 +36,11 @@ const PlaceItemContainer = ({
           item={item}
           handleDirectionsClick={handleDirectionsClick}
           handlePlaceClick={handlePlaceClick}
+          currentCoords={currentCoords}
         />
       </>
     );
-  }, [isSaved, item, isSelected, user]);
+  }, [isSaved, item, isSelected, user, currentCoords]);
 };
 
 export default PlaceItemContainer;
