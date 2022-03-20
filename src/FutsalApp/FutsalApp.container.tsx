@@ -1,24 +1,24 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
 import { SWRConfig } from 'swr';
 
 import FutsalAppPresenter from './FutsalApp.presenter';
 
 import { client } from '../api/client';
 import { getPlaceSearchQuery } from '../api/query';
-import { debounce, userUtils } from '../utils/';
+import { Axios } from '../api/request';
 import { UserContext } from '../context/userContext';
 import { IFilterState, IDataAction } from './FutsalApp.entity';
 import { dataActions } from './FutsalApp.actions';
 import { IPlace } from '../PlaceItem/PlaceItem.entity';
-import { ModalContextProvider } from '../context/modalContext';
+import { usePosition } from '../hooks';
+import { debounce, userUtils } from '../utils/';
 
 const swrGlobalOptions = {
   revalidateOnFocus: false,
   dedupingInterval: 1000000,
 };
 
-const { useState, useContext, useReducer } = React;
+const { useState, useContext, useReducer, useEffect } = React;
 
 const initialState: IFilterState = {
   filter: 'init',
@@ -43,23 +43,31 @@ const reducer = (state: IFilterState, action: IDataAction): IFilterState => {
 
 const FutsalAppContainer = () => {
   // hook으로 빼는건 ..? usePlaces
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
+  const [currentCity, setCurrentCity] = useState('');
+  const { lat, lng } = usePosition();
   const [{ filter }, dispatch] = useReducer(reducer, initialState);
 
   const { user, setUser } = useContext(UserContext);
 
   const onSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    debounce(getPlaces, e.target.value);
+    const currentQuery = e.target.value || currentCity;
+    debounce(getPlaces, currentQuery);
   };
 
-  const getPlaces = (query: string = '') => {
+  const getPlaces = (query: string) => {
+    if (!query) return;
+
     setIsLoading(true);
     client
       .fetch(getPlaceSearchQuery(query))
       .then((data) => {
         dispatch({ type: 'INIT' });
+        // 전체 데이터의 상태관리와 현재 불러올 상태관리 데이터를 분리.
+        // 전체 데이터를 위도 경도로 이용한 직선거리 순으로 정렬.
+        // 현재 불러올 데이터는 10~20개씩 가져온다.
         setData(data);
       })
       .catch((error) => {
@@ -68,6 +76,19 @@ const FutsalAppContainer = () => {
       .finally(() => {
         setIsLoading(false);
       });
+  };
+
+  const getCurrentCity = async (lat: number, lng: number) => {
+    if (!lat || !lng) return;
+    const url = `/api/map/address?lat=${lat}&lng=${lng}`;
+    try {
+      const { data: address } = await Axios.get<string>(url);
+      console.log(address);
+      setCurrentCity(address);
+    } catch (err) {
+      console.log(err);
+      setError(err);
+    }
   };
 
   const getDataByFilter = (data: IPlace[], filter: string) => {
@@ -81,7 +102,7 @@ const FutsalAppContainer = () => {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     const localUser = userUtils.getUser();
     if (localUser) {
       client.getDocument(localUser._id).then((user) => {
@@ -91,9 +112,15 @@ const FutsalAppContainer = () => {
         userUtils.setUser(userInfo);
       });
     }
-    // query를 넘겨주어 현재 도시의 데이터를 불러와야한다.
-    getPlaces();
   }, []);
+
+  useEffect(() => {
+    getCurrentCity(lat, lng);
+  }, [lat, lng]);
+
+  useEffect(() => {
+    getPlaces(currentCity);
+  }, [currentCity]);
 
   const filteredData = React.useMemo(
     () => getDataByFilter(data, filter),
