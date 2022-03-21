@@ -1,4 +1,5 @@
 import * as React from 'react';
+import getDistance from 'geolib/es/getDistance';
 
 import PlaceItem from './PlaceItem.presenter';
 
@@ -22,6 +23,22 @@ const PlaceItemContainer = ({
     setPlace(placeAddress);
   };
 
+  const distanceFromCurrentPosition: number = useMemo(() => {
+    return currentCoords.lat
+      ? getDistance(
+          {
+            longitude: item.longitude,
+            latitude: item.latitude,
+          },
+          {
+            longitude: currentCoords.lng,
+            latitude: currentCoords.lat,
+          },
+          0.1
+        )
+      : 0;
+  }, [currentCoords.lat]);
+
   const isSaved = !!user?.save?.find((place) => place._ref === item._id);
   const isSelected = currentPlace === item.address;
   // is saved 로 필터를 시킬 수있다.
@@ -36,7 +53,7 @@ const PlaceItemContainer = ({
           item={item}
           handleDirectionsClick={handleDirectionsClick}
           handlePlaceClick={handlePlaceClick}
-          currentCoords={currentCoords}
+          distanceFromCurrentPosition={distanceFromCurrentPosition}
         />
       </>
     );

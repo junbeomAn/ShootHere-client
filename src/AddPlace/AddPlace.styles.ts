@@ -8,6 +8,7 @@ export const addPlaceStyles = css`
   flex-direction: column;
   align-items: center;
   position: relative;
+  margin-top: 60px;
   h2 {
     margin-bottom: 50px;
   }

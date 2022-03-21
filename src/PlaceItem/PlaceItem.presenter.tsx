@@ -91,7 +91,7 @@ const PlaceItemPresenter = ({
   handlePlaceClick,
   isSaved,
   isSelected,
-  currentCoords,
+  distanceFromCurrentPosition,
 }: IPlaceItemPresenter) => {
   const {
     address,
@@ -102,20 +102,6 @@ const PlaceItemPresenter = ({
     maxPrice,
     _id,
   } = item;
-
-  const distanceFromCurrentPosition: number = currentCoords.lat
-    ? getDistance(
-        {
-          longitude: item.longitude,
-          latitude: item.latitude,
-        },
-        {
-          longitude: currentCoords.lng,
-          latitude: currentCoords.lat,
-        },
-        0.1
-      )
-    : 0;
 
   return (
     <PlaceItem
