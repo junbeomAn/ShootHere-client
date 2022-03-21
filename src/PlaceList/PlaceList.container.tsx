@@ -67,9 +67,6 @@ const PlaceListContainer = ({ data, isLoading }: IPlaceListContainer) => {
 
   useEffect(() => {
     initObserver();
-    return () => {
-      setPage(1);
-    };
   }, [data]);
 
   // change data according to page, using usememo
