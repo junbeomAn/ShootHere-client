@@ -6,7 +6,6 @@ import { IPlaceListContainer, IPhoto, IPlaceImage } from './PlaceList.entity';
 import { client } from '../api/client';
 import { getPlaceImagesQuery } from '../api/query';
 import { ModalContext } from '../context/modalContext';
-import { ListPageContext } from '../context/listPageContext';
 
 const { useState, useContext, useMemo, useRef, useEffect } = React;
 
@@ -15,13 +14,23 @@ const ITEM_COUNT_PER_PAGE = 5;
 const PlaceListContainer = ({ data, isLoading }: IPlaceListContainer) => {
   const [images, setImages] = useState<IPlaceImage[]>([]);
   const [placeName, setPlaceName] = useState('');
+  const [page, setPage] = useState(1);
 
   const { setIsOpen } = useContext(ModalContext);
-  // page context use
-  const { page, setPage } = useContext(ListPageContext);
   const loadingRef = useRef<HTMLDivElement>(null);
 
+  // change data according to page, using usememo
+  const dataWithCurrentPage = useMemo(() => {
+    return data.slice(0, page * ITEM_COUNT_PER_PAGE);
+  }, [page, data]);
+
+  const resetCarouselData = () => {
+    setImages([]);
+    setPlaceName('');
+  };
+
   const handlePlaceClick = (placeId: string, name: string) => {
+    resetCarouselData();
     setIsOpen(true);
 
     client.fetch<IPhoto[]>(getPlaceImagesQuery(placeId)).then((res) => {
@@ -32,8 +41,9 @@ const PlaceListContainer = ({ data, isLoading }: IPlaceListContainer) => {
     });
   };
   // next page * COUNT 이 data의 length 보다 작거나 같을때.
-  const hasNextPage = (currPage: number) =>
-    (currPage + 1) * ITEM_COUNT_PER_PAGE <= data.length;
+  const hasNextPage = (currPage: number) => {
+    return (currPage + 1) * ITEM_COUNT_PER_PAGE <= data.length;
+  };
 
   const handleObserver: IntersectionObserverCallback = (entries, observer) => {
     entries.forEach((entry) => {
@@ -60,19 +70,15 @@ const PlaceListContainer = ({ data, isLoading }: IPlaceListContainer) => {
     };
 
     observer = new IntersectionObserver(handleObserver, options);
-    if (loadingRef.current) {
+    if (loadingRef.current && data.length > ITEM_COUNT_PER_PAGE) {
       observer.observe(loadingRef.current);
     }
   };
 
   useEffect(() => {
     initObserver();
+    setPage(1);
   }, [data]);
-
-  // change data according to page, using usememo
-  const dataWithCurrentPage = useMemo(() => {
-    return data.slice(0, page * ITEM_COUNT_PER_PAGE);
-  }, [page, data]);
 
   return (
     <>

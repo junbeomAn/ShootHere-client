@@ -15,7 +15,6 @@ import Modal from '../Modal/Modal.container';
 import { IFutsalAppPresenter } from './FutsalApp.entity';
 import { AppLeftBoxStyle, FutsalAppStyle, NavStyle } from './FutsalApp.styles';
 import { ModalContextProvider } from '../context/modalContext';
-import { ListPageContextProvider } from '../context/listPageContext';
 
 const FutsalAppPresenter = ({
   onChange,
@@ -48,9 +47,7 @@ const FutsalAppPresenter = ({
           </Modal>
         </ModalContextProvider>
         <ModalContextProvider>
-          <ListPageContextProvider>
-            <PlaceList data={data} isLoading={isLoading} />
-          </ListPageContextProvider>
+          <PlaceList data={data} isLoading={isLoading} />
         </ModalContextProvider>
       </section>
       {!isMobile && <Map />}
