@@ -4,10 +4,7 @@ export const Axios = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  baseURL:
-    process.env.NODE_ENV === 'development'
-      ? `http://localhost:3000`
-      : `https://shoothere-server.herokuapp.com`,
+  baseURL: `https://shoothere-server.herokuapp.com`,
 });
 
 Axios.interceptors.request.use(
