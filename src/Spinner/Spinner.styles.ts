@@ -37,8 +37,8 @@ const rotateAnimationKeyframe = keyframes`
 `;
 
 export const LoadingSpinner = styled.div({
-  width: '13px',
-  height: '13px',
+  width: '25px',
+  height: '25px',
   border: `2px solid ${color.hoverGrey}`,
   borderTopColor: `${color.textGrey}`,
   borderRadius: '50%',

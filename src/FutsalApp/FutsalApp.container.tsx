@@ -64,11 +64,8 @@ const FutsalAppContainer = () => {
     client
       .fetch(getPlaceSearchQuery(query))
       .then((data) => {
-        dispatch({ type: 'INIT' });
-        // 전체 데이터의 상태관리와 현재 불러올 상태관리 데이터를 분리.
-        // 전체 데이터를 위도 경도로 이용한 직선거리 순으로 정렬.
-        // 현재 불러올 데이터는 10~20개씩 가져온다.
         setData(data);
+        dispatch({ type: 'INIT' });
       })
       .catch((error) => {
         setError(error.message);

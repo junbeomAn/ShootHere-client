@@ -19,13 +19,13 @@ const ModalContainer: React.FunctionComponent<IModalContainer> = ({
 }) => {
   const { isOpen, setIsOpen } = useContext(ModalContext);
 
-  const onOuterClick = () => {
+  const onClose = () => {
     setIsOpen(false);
   };
 
   const onEscapePress = (e: KeyboardEvent) => {
     if (e.key === 'Escape') {
-      setIsOpen(false);
+      onClose();
     }
   };
 
@@ -37,9 +37,9 @@ const ModalContainer: React.FunctionComponent<IModalContainer> = ({
 
   return (
     isOpen && (
-      <div css={modalStyles} onClick={stopPropagation(onOuterClick)}>
+      <div css={modalStyles} onClick={stopPropagation(onClose)}>
         <ModalBox onClick={stopPropagation()} width={width} height={height}>
-          <IoMdClose css={closeBtnStyles} onClick={() => setIsOpen(false)} />
+          <IoMdClose css={closeBtnStyles} onClick={onClose} />
           {children}
         </ModalBox>
       </div>
