@@ -7,6 +7,7 @@ import { usePosition } from '../hooks';
 import { PlaceDispatchContext, PlaceContext } from '../context/placeContext';
 import { UserContext } from '../context/userContext';
 import { IPlaceItemContainer } from './PlaceItem.entity';
+import { isMobile } from 'react-device-detect';
 
 const { useContext, useMemo } = React;
 
@@ -20,7 +21,15 @@ const PlaceItemContainer = ({
   const { user } = useContext(UserContext);
 
   const handleDirectionsClick = (placeAddress: string) => {
-    setPlace(placeAddress);
+    if (isMobile) {
+      window.location.href = `
+      nmap://route/car?dlat=${item.latitude}&dlng=${
+        item.longitude
+      }&dname=${encodeURIComponent(item.placeName)}&appname=shoot-here
+      `;
+    } else {
+      setPlace(placeAddress);
+    }
   };
 
   const distanceFromCurrentPosition: number = useMemo(() => {
