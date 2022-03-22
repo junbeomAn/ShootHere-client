@@ -25,19 +25,21 @@ const FutsalAppPresenter = ({
 }: IFutsalAppPresenter) => {
   return (
     <div css={FutsalAppStyle}>
-      <nav css={NavStyle}>
-        <Link to='/addPlace'>
-          <CustomButton
-            css={css`
-              font-size: 25px;
-            `}
-            size='medium'
-            theme='primary'
-          >
-            +
-          </CustomButton>
-        </Link>
-      </nav>
+      {!isMobile && (
+        <nav css={NavStyle}>
+          <Link to='/addPlace'>
+            <CustomButton
+              css={css`
+                font-size: 25px;
+              `}
+              size='medium'
+              theme='primary'
+            >
+              +
+            </CustomButton>
+          </Link>
+        </nav>
+      )}
 
       <section css={AppLeftBoxStyle}>
         <ModalContextProvider>
