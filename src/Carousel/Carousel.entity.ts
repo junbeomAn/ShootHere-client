@@ -10,6 +10,6 @@ export interface ICarouselPresenter extends ICarousel {
   updateIndex: (index: number) => void;
 }
 
-export interface ICarouselItem {
+export type ICarouselItem = React.PropsWithChildren<{
   image?: string;
-}
+}>;

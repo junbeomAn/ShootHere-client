@@ -11,6 +11,9 @@ export const carouselStyles = css({
 
 export const carouselTitleStyles = css({
   margin: 0,
+  span: {
+    color: 'transparent',
+  },
 });
 
 export const ImageContainer = styled.div(
@@ -23,7 +26,7 @@ export const ImageContainer = styled.div(
   })
 );
 
-export const emptyMessageStyles = css({
+export const messageStyles = css({
   position: 'absolute',
   top: '50%',
   left: '50%',

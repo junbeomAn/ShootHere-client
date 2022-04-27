@@ -7,9 +7,11 @@ import {
   MdOutlineArrowForwardIos,
 } from 'react-icons/md';
 
+import Spinner from '../Spinner/Spinner.presenter';
 import { urlFor } from '../api/client';
-import { ICarouselItem, ICarouselPresenter } from './Carousel.entity';
 
+import { ICarouselItem, ICarouselPresenter } from './Carousel.entity';
+import { IPlaceImage } from 'PlaceList/PlaceList.entity';
 import {
   carouselStyles,
   ImageContainer,
@@ -17,11 +19,11 @@ import {
   labelStyles,
   carouselItemStyles,
   carouselTitleStyles,
-  emptyMessageStyles,
+  messageStyles,
   CarouselLabelBtn,
 } from './Carousel.styles';
 
-const CarouselItem: React.FunctionComponent<ICarouselItem> = ({ children }) => {
+const CarouselItem = ({ children }: ICarouselItem) => {
   return <div css={carouselItemStyles}>{children}</div>;
 };
 
@@ -35,21 +37,39 @@ const CarouselPresenter = ({
     const { id } = e.currentTarget;
     updateIndex(Number(id));
   };
+  const createCarouselItemCb = (item: IPlaceImage, i: number) => (
+    <CarouselItem key={i}>
+      <img src={urlFor(item).url()} alt='place-photo' />
+    </CarouselItem>
+  );
+  const createCarouselLabelBtnCb = (item: IPlaceImage, i: number) => (
+    <CarouselLabelBtn
+      isActive={currentIndex === i}
+      key={`${i}`}
+      id={`${i}`}
+      onClick={onImageIndicatorClick}
+    >
+      <img src={urlFor(item).url()} alt='place-photo' />
+    </CarouselLabelBtn>
+  );
+  const getItems = <T,>(
+    data: T[],
+    cb: (item: T, i: number) => jsx.JSX.Element
+  ) => data.map(cb);
 
   return (
     <div css={carouselStyles}>
-      <h2 css={carouselTitleStyles}>{placeName}</h2>
+      <h2 css={carouselTitleStyles}>
+        {!placeName && <span>구장 이름</span>}
+        {placeName}
+      </h2>
       <ImageContainer currentIndex={currentIndex}>
         {images.length === 0 && (
-          <span css={emptyMessageStyles}>
-            현재 등록된 구장 이미지가 없습니다.
+          <span css={messageStyles}>
+            {placeName ? '현재 등록된 구장 이미지가 없습니다.' : <Spinner />}
           </span>
         )}
-        {images.map((item, i) => (
-          <CarouselItem key={i}>
-            <img src={urlFor(item).url()} alt='place-photo' />
-          </CarouselItem>
-        ))}
+        {getItems(images, createCarouselItemCb)}
       </ImageContainer>
       <div css={indicatorStyles}>
         <button onClick={() => updateIndex(currentIndex - 1)}>
@@ -59,18 +79,7 @@ const CarouselPresenter = ({
           <MdOutlineArrowForwardIos />
         </button>
       </div>
-      <div css={labelStyles}>
-        {images.map((item, i) => (
-          <CarouselLabelBtn
-            isActive={currentIndex === i}
-            key={`${i}`}
-            id={`${i}`}
-            onClick={onImageIndicatorClick}
-          >
-            <img src={urlFor(item).url()} alt='place-photo' />
-          </CarouselLabelBtn>
-        ))}
-      </div>
+      <div css={labelStyles}>{getItems(images, createCarouselLabelBtnCb)}</div>
     </div>
   );
 };
