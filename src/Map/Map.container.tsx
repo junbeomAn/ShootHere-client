@@ -6,7 +6,7 @@ import { PlaceContext } from '../context/placeContext';
 import MapPresenter from './Map.presenter';
 import { Axios } from '../api/request';
 
-const MapContainer: React.FunctionComponent = () => {
+const MapContainer = () => {
   const [goalCoords, setGoalCoords] = React.useState<ICoords>({} as ICoords);
   const currentCoords = usePosition();
   const placeCache = React.useRef(new Map());
