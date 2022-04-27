@@ -10,8 +10,11 @@
     "moduleResolution": "node",
     "sourceMap": true,
     "noEmitOnError": true,
-    "removeComments": true
+    "removeComments": true,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "./src"
   },
+  "include": ["src"],
   "exclude": [
     "node_modules",
     "./futsal-server",
