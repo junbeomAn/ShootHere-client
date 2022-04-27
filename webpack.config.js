@@ -8,6 +8,7 @@ module.exports = {
   devtool: 'inline-source-map',
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
+    modules: [path.resolve(__dirname, 'src'), 'node_modules'],
   },
   entry: {
     index: './src/index',

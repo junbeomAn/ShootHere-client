@@ -1,4 +1,4 @@
-import { IUser } from '../Login/Login.entity';
+import { IUser } from 'components/Login/Login.entity';
 
 const getUser = (): IUser => {
   const user = localStorage.getItem('user') || null;

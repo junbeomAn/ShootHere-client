@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IUser } from '../Login/Login.entity';
+import { IUser } from 'components/Login/Login.entity';
 
 export interface IUserContextState {
   user: IUser;
