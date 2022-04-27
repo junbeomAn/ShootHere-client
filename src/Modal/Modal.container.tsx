@@ -12,11 +12,7 @@ import { stopPropagation } from '../utils';
 
 const { useEffect, useContext } = React;
 
-const ModalContainer: React.FunctionComponent<IModalContainer> = ({
-  children,
-  width,
-  height,
-}) => {
+const ModalContainer = ({ children, width, height }: IModalContainer) => {
   const { isOpen, setIsOpen } = useContext(ModalContext);
 
   const onClose = () => {
