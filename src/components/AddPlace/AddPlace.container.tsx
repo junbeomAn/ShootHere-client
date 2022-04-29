@@ -63,11 +63,12 @@ const AddPlace = () => {
       await client.create(imageDoc);
       reset();
       setImageAsset([]);
-      setIsLoading(false);
       alert('장소 등록이 완료되었습니다.');
     } catch (err) {
       alert('장소 등록 요청에 실패하였습니다.');
       console.error(err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
