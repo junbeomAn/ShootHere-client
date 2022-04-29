@@ -39,14 +39,6 @@ module.exports = {
   output: {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist'),
-    clean: true,
-  },
-  devServer: {
-    static: './dist',
-    hot: true,
-    historyApiFallback: true,
-    // proxy: {
-    //   '/api': 'http://localhost:3000/',
-    // },
+    // clean: true,
   },
 };
