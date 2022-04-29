@@ -2,6 +2,10 @@
 
 공영, 개인 관련 없이 `주변 풋살장 정보`를 한번에 모아 볼 수 있는 페이지
 
+## ShootHere Server Repository
+
+[Naver Maps를 이용한 api 서버 레포](https://github.com/junbeomAn/ShootHere-server)
+
 ## Why?
 직접 풋살 그룹에 소속되어 활동을 하다보니
 - 풋살장 대관 예약이 선착순으로 진행되고
@@ -12,6 +16,7 @@
 - 이런 문제를 간단하게나마 해결해보고 싶었다
 
 ![image](https://user-images.githubusercontent.com/32658347/165424902-760035ca-ca5b-47c9-a09a-44108026eeb6.png)
+
 
 ## Features
 
@@ -58,6 +63,10 @@
 |풋살장 데이터 조회 및 등록은 [Sanity](https://www.sanity.io/) 를 이용해서 구현|
 |------|
  
+## Application structure
+
+![image](https://user-images.githubusercontent.com/32658347/165898891-5c6b4d35-8aa3-4b19-aba1-a96645ba825f.png)
+
  
 ## Table structure
 
