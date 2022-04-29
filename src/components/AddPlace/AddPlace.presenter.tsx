@@ -15,10 +15,10 @@ import {
   errorMessageStyles,
   uploadAreaStyles,
   uploadContainerStyles,
-  inputSpinnerStyles,
   inputSubmitStyles,
   uploadInputStyles,
   uploadImagePreviewStyles,
+  addPlaceInputCustomStyles,
 } from './AddPlace.styles';
 
 const futsalInfoFields = {
@@ -59,11 +59,7 @@ const AddPlacePresenter = ({
       error={field === error}
       label={value}
       register={register}
-      style={`
-        border-bottom: 2px solid #d0d0d0;
-        padding: 5px 10px;
-        margin-bottom: 28px;
-      `}
+      style={addPlaceInputCustomStyles}
     />
   ));
 

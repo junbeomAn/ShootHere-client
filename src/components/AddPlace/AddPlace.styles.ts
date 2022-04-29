@@ -14,6 +14,12 @@ export const addPlaceStyles = css`
   }
 `;
 
+export const addPlaceInputCustomStyles = `
+border-bottom: 2px solid #d0d0d0;
+padding: 5px 10px;
+margin-bottom: 28px;
+`;
+
 export const errorMessageStyles = css`
   color: ${color.errorRed};
   position: absolute;
