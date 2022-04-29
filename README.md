@@ -58,3 +58,15 @@
 |풋살장 데이터 조회 및 등록은 [Sanity](https://www.sanity.io/) 를 이용해서 구현|
 |------|
  
+ 
+## Table structure
+
+![image](https://user-images.githubusercontent.com/32658347/165876195-09d497eb-517d-45ca-85c5-39d0624e17e7.png)
+
+<br />
+
+## Folder structure 
+
+![스크린샷 2022-04-27 오후 5 07 19](https://user-images.githubusercontent.com/32658347/165876273-c7c3027a-f12e-4e48-bb4b-726c48f6c604.png)
+
+<br />
