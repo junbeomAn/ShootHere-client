@@ -38,7 +38,7 @@ const NO_IMAGE_MSG = '업로드할 이미지가 없습니다.';
 const AddPlacePresenter = ({
   register,
   handleSubmit,
-  onChange,
+  onImageChange,
   errors,
   isLoading,
   isUploading,
@@ -83,7 +83,7 @@ const AddPlacePresenter = ({
     );
 
   const getInputError = (error: string) => `${error} field is required.`;
-
+  const isUploadImageEmpty = imageAsset.length === 0;
   return (
     <form css={addPlaceStyles} onSubmit={handleSubmit}>
       <h2>{ADD_PLACE_TITLE}</h2>
@@ -93,14 +93,14 @@ const AddPlacePresenter = ({
       <label css={uploadContainerStyles}>
         <h3>{IMAGE_UPLOAD_TITLE}</h3>
         <div css={uploadImagePreviewStyles}>
-          {imageAsset.length === 0 && <span>{NO_IMAGE_MSG}</span>}
+          {isUploadImageEmpty && <span>{NO_IMAGE_MSG}</span>}
           {getUploadableImages()}
         </div>
         <div css={uploadAreaStyles}>
           <MdOutlineUploadFile />
           {getUploadState()}
         </div>
-        <input css={uploadInputStyles} type='file' onChange={onChange} />
+        <input css={uploadInputStyles} type='file' onChange={onImageChange} />
       </label>
       {getSubmitButton()}
     </form>
