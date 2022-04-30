@@ -1,3 +1,5 @@
+import { Method, AxiosRequestConfig } from 'axios';
+
 export interface IPathCoords {
   startLat: number;
   startLng: number;
@@ -16,4 +18,11 @@ export interface IUsePathResponse {
 export interface ICoords {
   lat: number;
   lng: number;
+}
+
+export interface IAxiosHook {
+  loadOnMount?: boolean;
+  url?: string;
+  method?: Method;
+  config?: AxiosRequestConfig;
 }
