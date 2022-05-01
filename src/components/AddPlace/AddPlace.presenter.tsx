@@ -8,7 +8,7 @@ import { BeatLoader } from 'react-spinners';
 import Input from 'components/Input/Input.presenter';
 import Spinner from 'components/Spinner/Spinner.presenter';
 
-import { IAddPlacePresenter } from './AddPlace.entity';
+import { IAddPlacePresenter, IFutsalInfoFields } from './AddPlace.entity';
 
 import {
   addPlaceStyles,
@@ -21,7 +21,7 @@ import {
   addPlaceInputCustomStyles,
 } from './AddPlace.styles';
 
-const futsalInfoFields = {
+const futsalInfoFields: IFutsalInfoFields = {
   placeName: '이름',
   address: '주소',
   phoneNumber: '전화번호',
@@ -51,17 +51,21 @@ const AddPlacePresenter = ({
   };
   const error = getCurrentError(errors);
 
-  const inputFields = Object.entries(futsalInfoFields).map(([field, value]) => (
-    <Input
-      id={field}
-      key={field}
-      name={field}
-      error={field === error}
-      label={value}
-      register={register}
-      style={addPlaceInputCustomStyles}
-    />
-  ));
+  // required는 이름, 주소만
+  const inputFields = Object.entries(futsalInfoFields).map(
+    ([field, value], i) => (
+      <Input
+        id={field}
+        key={field}
+        name={field}
+        error={field === error}
+        label={value}
+        required={i < 2}
+        register={register}
+        style={addPlaceInputCustomStyles}
+      />
+    )
+  );
 
   const getUploadableImages = () =>
     imageAsset?.map((item) => (
@@ -75,21 +79,32 @@ const AddPlacePresenter = ({
   const getSubmitButton = () =>
     isLoading ? (
       <div css={inputSubmitStyles}>
-        <Spinner />
+        <Spinner
+          style={{
+            width: '16px',
+            height: '16px',
+            borderWidth: '2px',
+          }}
+        />
         {/* <BeatLoader size={10} /> */}
       </div>
     ) : (
       <input css={inputSubmitStyles} type='submit' value={'등록'} />
     );
 
-  const getInputError = (error: string) => `${error} field is required.`;
+  const getInputError = (error: string) =>
+    `${error} 항목이 입력되지 않았습니다.`;
   const isUploadImageEmpty = imageAsset.length === 0;
+
   return (
     <form css={addPlaceStyles} onSubmit={handleSubmit}>
       <h2>{ADD_PLACE_TITLE}</h2>
-      {error && <span css={errorMessageStyles}>{getInputError(error)}</span>}
+      {error && (
+        <span css={errorMessageStyles}>
+          {getInputError(futsalInfoFields[error])}
+        </span>
+      )}
       {inputFields}
-
       <label css={uploadContainerStyles}>
         <h3>{IMAGE_UPLOAD_TITLE}</h3>
         <div css={uploadImagePreviewStyles}>

@@ -29,7 +29,8 @@ export const inputStyles = (addStyles: string) => css`
   ${addStyles}
 `;
 
-export const inputErrorStyles = css`
+export const inputErrorStyles = (addStyles: string) => css`
   ${inputBaseStyles}
+  ${addStyles}
   border-color: ${color.errorRed};
 `;

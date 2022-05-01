@@ -18,6 +18,7 @@ const Input = ({
   name,
   id,
   label,
+  required,
   style,
   ...otherProps
 }: IInput) => {
@@ -30,8 +31,8 @@ const Input = ({
       )}
       <input
         id={id}
-        css={error ? inputErrorStyles : inputStyles(style)}
-        {...register?.(name, { required: Number(id) < 2 })} // required는 이름, 주소만
+        css={error ? inputErrorStyles(style) : inputStyles(style)}
+        {...register?.(name, { required })}
         {...otherProps}
       />
     </div>

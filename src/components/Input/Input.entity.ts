@@ -8,6 +8,7 @@ export interface IInput {
   placeholder?: string;
   error?: boolean;
   label?: string;
+  required?: boolean;
   css?: Interpolation<Theme>;
   register?: UseFormRegister<FieldValues>;
   onChange?: ReactEventHandler;

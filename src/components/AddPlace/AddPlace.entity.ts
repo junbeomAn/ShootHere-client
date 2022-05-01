@@ -5,6 +5,10 @@ import { UseFormRegister, FieldValues } from 'react-hook-form';
 import { IPlace } from 'components/PlaceItem/PlaceItem.entity';
 import { IBase } from 'commonEntity';
 
+export interface IFutsalInfoFields {
+  [key: string]: string;
+}
+
 export interface IAddPlacePresenter extends IBase {
   register: UseFormRegister<FieldValues>;
   handleSubmit: (e?: React.BaseSyntheticEvent) => Promise<void>;
@@ -15,5 +19,3 @@ export interface IAddPlacePresenter extends IBase {
 }
 
 export interface IAddPlaceData extends Omit<IPlace, '_id'> {}
-
-export type IUploadAsset = 'file' | 'image';
