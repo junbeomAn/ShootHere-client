@@ -9,7 +9,7 @@ import useAxios from 'hooks/useAxios';
 import { createQueryString } from 'utils';
 import { CustomError } from 'utils/error';
 
-import { IAddPlaceData, IUploadAsset } from './AddPlace.entity';
+import { IAddPlaceData } from './AddPlace.entity';
 import { IXYCoords } from 'commonEntity';
 
 const { useState, useEffect } = React;
