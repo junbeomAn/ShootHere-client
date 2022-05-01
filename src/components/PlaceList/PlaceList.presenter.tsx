@@ -10,10 +10,15 @@ import Carousel from 'components/Carousel/Carousel.container';
 import Spinner from 'components/Spinner/Spinner.presenter';
 
 import { IPlaceListPresenter } from './PlaceList.entity';
-import { emptyResultStyles, PlaceListStyle } from './PlaceList.styles';
+import {
+  emptyResultStyles,
+  noMorePageMsgStyles,
+  PlaceListStyle,
+} from './PlaceList.styles';
 import { spinnerCustomContainerStyles } from './PlaceList.styles';
 
 const NO_RESULT_MSG = '해당 조건에 맞는 풋살장이 없습니다.';
+const NO_MORE_RESULTS = '더이상 불러올 풋살장이 없습니다.';
 
 const PlaceListPresenter = ({
   data,
@@ -41,6 +46,7 @@ const PlaceListPresenter = ({
           <span css={emptyResultStyles}>{NO_RESULT_MSG}</span>
         )}
         {getPlaceList()}
+        {isLastPage && !isLoading && <NoMorePageMessage />}
         {
           <div ref={loadingRef} css={spinnerCustomContainerStyles}>
             {(!isLastPage || isLoading) && (
@@ -64,3 +70,7 @@ const PlaceListPresenter = ({
 };
 
 export default PlaceListPresenter;
+
+function NoMorePageMessage() {
+  return <div css={noMorePageMsgStyles}>{NO_MORE_RESULTS}</div>;
+}

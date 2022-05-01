@@ -32,3 +32,9 @@ export const spinnerCustomContainerStyles = css`
   height: 1px;
   justify-content: center;
 `;
+
+export const noMorePageMsgStyles = css`
+  padding: 15px 0;
+  text-align: center;
+  color: ${color.textGrey};
+`;
