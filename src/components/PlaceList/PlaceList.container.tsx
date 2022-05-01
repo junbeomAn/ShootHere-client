@@ -10,7 +10,7 @@ import { IPlaceListContainer, IPhoto, IPlaceImage } from './PlaceList.entity';
 
 const { useState, useContext, useMemo, useRef, useEffect } = React;
 
-const ITEM_COUNT_PER_PAGE = 5;
+const ITEM_COUNT_PER_PAGE = 6;
 
 const PlaceListContainer = ({ data, isLoading }: IPlaceListContainer) => {
   const [images, setImages] = useState<IPlaceImage[]>([]);
@@ -35,15 +35,21 @@ const PlaceListContainer = ({ data, isLoading }: IPlaceListContainer) => {
     setIsOpen(true);
 
     client.fetch<IPhoto[]>(getPlaceImagesQuery(placeId)).then((res) => {
-      const [data] = res;
+      const [imageData] = res;
 
-      setImages(data ? data.url : []);
+      setImages(imageData ? imageData.url : []);
       setPlaceName(name);
     });
   };
-  // next page * COUNT 이 data의 length 보다 작거나 같을때.
+
   const hasNextPage = (currPage: number) => {
-    return (currPage + 1) * ITEM_COUNT_PER_PAGE <= data.length;
+    const totalCount = data.length;
+    const isNextPageFullItem =
+      (currPage + 1) * ITEM_COUNT_PER_PAGE <= totalCount;
+    const lastPageItemCount = totalCount - currPage * ITEM_COUNT_PER_PAGE;
+    const isNextPageItemExistAny = 0 <= lastPageItemCount;
+
+    return isNextPageFullItem || isNextPageItemExistAny;
   };
 
   const handleObserver: IntersectionObserverCallback = (entries, observer) => {
