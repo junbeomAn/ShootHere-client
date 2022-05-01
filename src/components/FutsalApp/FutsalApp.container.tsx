@@ -13,6 +13,7 @@ import { debounce, userUtils } from 'utils';
 import { IFilterState, IDataAction } from './FutsalApp.entity';
 import { dataActions } from './FutsalApp.actions';
 import { IPlace } from '../PlaceItem/PlaceItem.entity';
+import { ISaveRef } from 'components/Login/Login.entity';
 
 const swrGlobalOptions = {
   revalidateOnFocus: false,
@@ -77,6 +78,7 @@ const FutsalAppContainer = () => {
   };
 
   const getCurrentCity = async (lat: number, lng: number) => {
+    // useAxios 대체가능
     if (!lat || !lng) return;
     const url = `/api/map/address?lat=${lat}&lng=${lng}`;
     try {
@@ -89,12 +91,14 @@ const FutsalAppContainer = () => {
     }
   };
 
+  const isSaved = function (item: IPlace) {
+    const save: ISaveRef[] = this;
+    return save.find((savedItem) => savedItem._ref === item._id);
+  };
+
   const getDataByFilter = (data: IPlace[], filter: string) => {
     if (filter === 'saved') {
-      const save = user.save;
-      return data.filter((item) =>
-        save.find((savedItem) => savedItem._ref === item._id)
-      );
+      return data.filter(isSaved, user.save);
     } else {
       return data;
     }
