@@ -4,19 +4,19 @@ import { Axios } from '../api/request';
 import { IAxiosHook } from './hooks.entity';
 
 const useAxios = <T extends {}>({
-  loadOnMount = false,
-  url = null,
-  method = 'get',
   config,
-}: IAxiosHook) => {
+  loadOnMount = false,
+  defaultValue,
+}: IAxiosHook<T>) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>('');
-  const [data, setData] = useState<T>({} as T);
+  const [data, setData] = useState<T>(defaultValue);
   const controllerRef = useRef(new AbortController());
 
   const cancelRequest = () => controllerRef.current.abort();
   const getData = async (addUrl?: string) => {
     setIsLoading(true);
+    const { url = null, method = 'get' } = config;
     const newUrl = `${url ?? ''}${addUrl}`;
 
     try {

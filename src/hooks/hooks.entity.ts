@@ -20,9 +20,8 @@ export interface ICoords {
   lng: number;
 }
 
-export interface IAxiosHook {
-  loadOnMount?: boolean;
-  url?: string;
-  method?: Method;
+export interface IAxiosHook<T> {
   config?: AxiosRequestConfig;
+  loadOnMount?: boolean;
+  defaultValue?: T;
 }

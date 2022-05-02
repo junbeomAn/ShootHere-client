@@ -25,9 +25,11 @@ const AddPlace = () => {
     data: coords,
     getData: getCoords,
     cancelRequest,
-  } = useAxios<IXYCoords>({
+    error,
+  } = useAxios<IXYCoords[]>({
     loadOnMount: false,
-    url: `/api/map/coords`,
+    config: { url: `/api/map/coords` },
+    defaultValue: [],
   });
   const {
     register,
@@ -35,6 +37,7 @@ const AddPlace = () => {
     formState: { errors },
     watch,
     reset,
+    setError,
   } = useForm();
 
   const createImageUrlDocumentData = (item: SanityAssetDocument) => ({
@@ -48,9 +51,22 @@ const AddPlace = () => {
 
   const getNewPlaceCoords = async (address: string) => {
     const qs = createQueryString({ query: address });
-    await getCoords(qs);
-    const { x: longitude, y: latitude } = coords;
-    return { longitude, latitude };
+    try {
+      await getCoords(qs);
+      const [result] = coords;
+
+      if (!result) {
+        throw new CustomError('존재하지 않는 주소이거나, 잘못된 주소입니다.');
+      }
+
+      const { x: longitude, y: latitude } = result;
+      return { longitude, latitude };
+    } catch (err) {
+      if (err instanceof CustomError) {
+        setError('address', { message: err.message }, { shouldFocus: true });
+      }
+      throw err;
+    }
   };
 
   const createNewPlaceDocument = async (
@@ -96,6 +112,7 @@ const AddPlace = () => {
         latitude,
       });
       await createNewImageDocument(res?._id, imageAsset);
+
       resetData();
       alert(PLACE_REGISTER_COMPLETE);
     } catch (err) {

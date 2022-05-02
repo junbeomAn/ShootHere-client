@@ -44,12 +44,12 @@ const AddPlacePresenter = ({
   isUploading,
   imageAsset,
 }: IAddPlacePresenter) => {
-  const getCurrentError = (errors: { [x: string]: any }) => {
+  const getCurrentErrorField = (errors: { [x: string]: any }) => {
     return Object.keys(futsalInfoFields).find(
       (field) => errors[field] && field
     );
   };
-  const error = getCurrentError(errors);
+  const errorField = getCurrentErrorField(errors);
 
   // required는 이름, 주소만
   const inputFields = Object.entries(futsalInfoFields).map(
@@ -58,7 +58,7 @@ const AddPlacePresenter = ({
         id={field}
         key={field}
         name={field}
-        error={field === error}
+        error={field === errorField}
         label={value}
         required={i < 2}
         register={register}
@@ -92,17 +92,19 @@ const AddPlacePresenter = ({
       <input css={inputSubmitStyles} type='submit' value={'등록'} />
     );
 
-  const getInputError = (error: string) =>
-    `${error} 항목이 입력되지 않았습니다.`;
+  const getInputError = (errorField: string) => {
+    if (errors[errorField].message) {
+      return errors[errorField].message;
+    }
+    return `${futsalInfoFields[errorField]} 항목이 입력되지 않았습니다.`;
+  };
   const isUploadImageEmpty = imageAsset.length === 0;
 
   return (
     <form css={addPlaceStyles} onSubmit={handleSubmit}>
       <h2>{ADD_PLACE_TITLE}</h2>
-      {error && (
-        <span css={errorMessageStyles}>
-          {getInputError(futsalInfoFields[error])}
-        </span>
+      {errorField && (
+        <span css={errorMessageStyles}>{getInputError(errorField)}</span>
       )}
       {inputFields}
       <label css={uploadContainerStyles}>
