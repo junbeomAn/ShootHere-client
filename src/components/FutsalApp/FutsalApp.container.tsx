@@ -10,10 +10,10 @@ import { UserContext } from 'context/userContext';
 import { usePosition } from 'hooks';
 import { debounce, userUtils } from 'utils';
 
-import { IFilterState, IDataAction } from './FutsalApp.entity';
-import { dataActions } from './FutsalApp.actions';
+import { IFilterState } from './FutsalApp.entity';
 import { IPlace } from '../PlaceItem/PlaceItem.entity';
 import { ISaveRef } from 'components/Login/Login.entity';
+import FutsalAppReducer from './FutsalApp.reducer';
 
 const swrGlobalOptions = {
   revalidateOnFocus: false,
@@ -26,23 +26,6 @@ const initialState: IFilterState = {
   filter: 'init',
 };
 
-const reducer = (state: IFilterState, action: IDataAction): IFilterState => {
-  switch (action.type) {
-    case dataActions.SAVED:
-      return {
-        ...state,
-        filter: 'saved',
-      };
-    case dataActions.INIT:
-      return {
-        ...state,
-        filter: 'init',
-      };
-    default:
-      return state;
-  }
-};
-
 const FutsalAppContainer = () => {
   // hook으로 빼는건 ..? usePlaces
   const [isLoading, setIsLoading] = useState(true);
@@ -50,7 +33,7 @@ const FutsalAppContainer = () => {
   const [data, setData] = useState([]);
   const [currentCity, setCurrentCity] = useState('');
   const { lat, lng } = usePosition();
-  const [{ filter }, dispatch] = useReducer(reducer, initialState);
+  const [{ filter }, dispatch] = useReducer(FutsalAppReducer, initialState);
 
   const { user, setUser } = useContext(UserContext);
 
