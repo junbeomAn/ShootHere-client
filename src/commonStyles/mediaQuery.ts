@@ -12,4 +12,3 @@ breakPoints.forEach((bp, i) => {
 });
 
 export default mq;
-0;
