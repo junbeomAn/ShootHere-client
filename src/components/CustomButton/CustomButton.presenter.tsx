@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { css, jsx, Interpolation, Theme } from '@emotion/react';
+import { css, jsx } from '@emotion/react';
 import * as React from 'react';
 
 import { ICustomButton } from './CustomButton.entity';

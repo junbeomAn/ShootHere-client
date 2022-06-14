@@ -5,7 +5,6 @@ import mq from 'commonStyles/mediaQuery';
 export const AppStyle = css`
   display: flex;
   position: relative;
-  /* justify-content: center; */
   align-items: center;
   flex-direction: column;
   justify-content: space-between;
@@ -15,8 +14,6 @@ export const AppStyle = css`
 
 export const LogoBoxStyle = css`
   cursor: pointer;
-  /* position: absolute;
-  top: 30px; */
   display: flex;
   align-items: center;
   margin: 40px 0 0 0;

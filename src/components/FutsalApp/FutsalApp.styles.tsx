@@ -7,7 +7,7 @@ export const FutsalAppStyle = css`
   min-height: 500px;
   display: flex;
   box-shadow: 0px 0.2px 9px 0.2px #afaeae4f;
-
+  position: relative;
   ${mq.tablet} {
     height: 50vh;
   }
@@ -15,14 +15,6 @@ export const FutsalAppStyle = css`
     width: 100%;
     height: 75vh;
   }
-`;
-
-export const NavStyle = css`
-  position: absolute;
-  top: -60px;
-  right: 10px;
-  display: flex;
-  align-items: center;
 `;
 
 export const AppLeftBoxStyle = css({
