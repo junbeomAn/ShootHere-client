@@ -41,7 +41,6 @@ const FutsalAppPresenter = ({
           </Link>
         </nav>
       )}
-
       <section css={AppLeftBoxStyle}>
         <ModalContextProvider>
           <Filter onChange={onChange} dispatch={dispatch} filter={filter} />

@@ -1,13 +1,13 @@
 import { css } from '@emotion/react';
-import color from 'commonStyles/color';
 import mq from 'commonStyles/mediaQuery';
 
 export const FutsalAppStyle = css`
   width: 90%;
   height: 70vh;
+  min-height: 500px;
   display: flex;
   box-shadow: 0px 0.2px 9px 0.2px #afaeae4f;
-  position: relative;
+
   ${mq.tablet} {
     height: 50vh;
   }
