@@ -38,8 +38,8 @@ const MapContainer = () => {
           `/api/map/coords?query=${encodedQuery}`
         );
 
-        placeCache.current.set(place, data);
-        setGoalCoords({ lat: data.y, lng: data.x });
+        placeCache.current.set(place, data[0]);
+        setGoalCoords({ lat: data[0].y, lng: data[0].x });
       } else {
         setGoalCoords({ lat: cacheData.y, lng: cacheData.x });
       }
