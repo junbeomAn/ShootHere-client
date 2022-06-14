@@ -23,7 +23,7 @@ export const SpinnerContainer = styled.div<ISpinnerPresenter>`
 
 export const SpinnerMessageStyle = css`
   font-size: 15px;
-  color: ${color.hardBlue}
+  color: ${color.blurDarkGrey};
   margin: 2px;
 `;
 
