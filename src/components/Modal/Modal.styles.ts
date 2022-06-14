@@ -32,6 +32,7 @@ export const modalStyles = css({
     border: 'none',
     backgroundColor: color.blurGrey,
   },
+  backdropFilter: 'blur(4px)',
 });
 
 export const ModalBox = styled.div<IModalContainer>(({ width, height }) => ({
