@@ -2,18 +2,30 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import color from 'commonStyles/color';
+import mq from 'commonStyles/mediaQuery';
 
 export const carouselStyles = css({
-  width: '100%',
+  width: '70%',
+  maxWidth: '400px',
   height: '100%',
   position: 'relative',
   overflow: 'hidden',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+  [mq.tablet]: {
+    width: '100%',
+  },
 });
 
 export const carouselTitleStyles = css({
   margin: 0,
   span: {
     color: 'transparent',
+  },
+  [mq.tablet]: {
+    fontSize: '1rem',
   },
 });
 
@@ -23,7 +35,7 @@ export const ImageContainer = styled.div(
     transform: `translateX(-${currentIndex * 100}%)`,
     transition: `transform 0.4s`,
     whiteSpace: 'nowrap',
-    display: 'relative',
+    position: 'relative',
   })
 );
 
@@ -32,6 +44,9 @@ export const messageStyles = css({
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
+  [mq.tablet]: {
+    fontSize: '0.8rem',
+  },
 });
 
 export const carouselItemStyles = css({
@@ -52,23 +67,25 @@ export const indicatorStyles = css({
   top: '40%',
   display: 'flex',
   justifyContent: 'space-between',
-  width: '100%',
+  width: '99%',
   button: {
     border: 'none',
-    width: '30px',
-    height: '30px',
+    width: '50px',
+    height: '50px',
     cursor: 'pointer',
-    borderRadius: '50%',
-    backgroundColor: color.staleWhite,
+    backgroundColor: '#4545459a',
     ':hover': {
-      backgroundColor: color.textWhite,
+      backgroundColor: '#454545c4',
+    },
+    svg: {
+      fontSize: '1.5rem',
+      fill: 'white',
     },
   },
 });
 
 export const labelStyles = css({
   display: 'flex',
-  border: `1px solid ${color.softGrey}`,
   alignItems: 'center',
   marginTop: '10px',
   height: '45px',
