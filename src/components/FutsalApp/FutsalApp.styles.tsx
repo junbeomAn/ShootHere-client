@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import mq from 'commonStyles/mediaQuery';
 
-export const FutsalAppStyle = css`
+export const futsalAppStyle = css`
   width: 90%;
   height: 70vh;
   min-height: 500px;
@@ -17,7 +17,7 @@ export const FutsalAppStyle = css`
   }
 `;
 
-export const AppLeftBoxStyle = css({
+export const appLeftBoxStyle = css({
   display: 'flex',
   flexDirection: 'column',
   width: '34%',

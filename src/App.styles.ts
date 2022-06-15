@@ -2,7 +2,7 @@
 import { css } from '@emotion/react';
 import mq from 'commonStyles/mediaQuery';
 
-export const AppStyle = css`
+export const appStyle = css`
   display: flex;
   position: relative;
   align-items: center;
@@ -12,7 +12,7 @@ export const AppStyle = css`
   min-height: 700px;
 `;
 
-export const LogoBoxStyle = css`
+export const logoBoxStyle = css`
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -22,7 +22,7 @@ export const LogoBoxStyle = css`
   }
 `;
 
-export const LogoStyle = css`
+export const logoStyle = css`
   width: 300px;
   ${mq.mobile} {
     width: 200px;

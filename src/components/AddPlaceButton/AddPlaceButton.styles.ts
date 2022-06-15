@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 
-export const NavStyle = css`
+export const navStyle = css`
   position: absolute;
   top: -60px;
   right: 10px;

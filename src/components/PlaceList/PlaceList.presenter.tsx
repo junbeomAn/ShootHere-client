@@ -13,7 +13,7 @@ import { IPlaceListPresenter } from './PlaceList.entity';
 import {
   emptyResultStyles,
   noMorePageMsgStyles,
-  PlaceListStyle,
+  placeListStyle,
 } from './PlaceList.styles';
 import { spinnerCustomContainerStyles } from './PlaceList.styles';
 
@@ -41,7 +41,7 @@ const PlaceListPresenter = ({
     });
   return (
     <>
-      <div css={PlaceListStyle}>
+      <div css={placeListStyle}>
         {!isLoading && data.length === 0 && (
           <span css={emptyResultStyles}>{NO_RESULT_MSG}</span>
         )}

@@ -21,7 +21,7 @@ export const SpinnerContainer = styled.div<ISpinnerPresenter>`
       : ''}
 `;
 
-export const SpinnerMessageStyle = css`
+export const spinnerMessageStyle = css`
   font-size: 15px;
   color: ${color.blurDarkGrey};
   margin: 2px;

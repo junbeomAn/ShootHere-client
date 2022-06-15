@@ -15,7 +15,7 @@ import AddPlaceButton from 'components/AddPlaceButton/AddPlaceButton.presenter';
 import { ModalContextProvider } from 'context/modalContext';
 
 import { IFutsalAppPresenter } from './FutsalApp.entity';
-import { AppLeftBoxStyle, FutsalAppStyle } from './FutsalApp.styles';
+import { futsalAppStyle, appLeftBoxStyle } from './FutsalApp.styles';
 
 const FutsalAppPresenter = ({
   onChange,
@@ -25,8 +25,8 @@ const FutsalAppPresenter = ({
   dispatch,
 }: IFutsalAppPresenter) => {
   return (
-    <div css={FutsalAppStyle}>
-      <section css={AppLeftBoxStyle}>
+    <div css={futsalAppStyle}>
+      <section css={appLeftBoxStyle}>
         <ModalContextProvider>
           <Filter onChange={onChange} dispatch={dispatch} filter={filter} />
           <Modal width='300px' height='240px'>

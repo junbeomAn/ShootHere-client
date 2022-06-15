@@ -11,16 +11,16 @@ import { UserContextProvider } from 'context/userContext';
 import { PlaceContextProvider } from 'context/placeContext';
 import Logo from '../assets/image/logo_SH.png';
 
-import { AppStyle, LogoBoxStyle, LogoStyle } from 'App.styles';
+import { appStyle, logoBoxStyle, logoStyle } from 'App.styles';
 import Footer from 'components/Footer/Footer.presenter';
 
 export default function App() {
   const navigate = useNavigate();
   return (
     <UserContextProvider>
-      <div css={AppStyle}>
-        <div css={LogoBoxStyle} onClick={() => navigate('/')}>
-          <img src={Logo} css={LogoStyle} />
+      <div css={appStyle}>
+        <div css={logoBoxStyle} onClick={() => navigate('/')}>
+          <img src={Logo} css={logoStyle} />
         </div>
         <Routes>
           <Route

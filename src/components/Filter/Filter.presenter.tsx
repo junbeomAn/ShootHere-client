@@ -6,7 +6,7 @@ import { AiOutlineStar, AiFillStar } from 'react-icons/ai';
 import Input from 'components/Input/Input.presenter';
 
 import {
-  FilterPresenterStyles,
+  filterPresenterStyles,
   filterBtnContainerStyles,
   savedFilterActiveStyle,
   savedFilterInActiveStyle,
@@ -15,7 +15,7 @@ import { IFilterPresenter } from './Filter.entity';
 
 const FilterPresenter = ({ onChange, onClick, filter }: IFilterPresenter) => {
   return (
-    <nav css={FilterPresenterStyles}>
+    <nav css={filterPresenterStyles}>
       <Input
         id='search'
         placeholder='지역, 장소를 검색해보세요.'

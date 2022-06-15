@@ -1,11 +1,10 @@
 import { css } from '@emotion/react';
 import color from 'commonStyles/color';
 
-export const FilterPresenterStyles = css({
+export const filterPresenterStyles = css({
   display: 'flex',
   flexDirection: 'column',
   zIndex: 10,
-  // borderBottom: `1px solid ${color.softGrey}`,
 });
 
 export const filterBtnContainerStyles = css({

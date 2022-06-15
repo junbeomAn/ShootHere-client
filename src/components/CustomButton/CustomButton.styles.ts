@@ -59,7 +59,7 @@ const getTheme = (theme: string): string => {
   }
 };
 
-export const GetCustomButtonStyle = (props: ICustomButton) => css`
+export const getCustomButtonStyle = (props: ICustomButton) => css`
   ${getSize(props.size)}
   ${getTheme(props.theme)}
   border-radius: 5px;

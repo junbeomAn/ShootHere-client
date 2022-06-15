@@ -56,7 +56,7 @@ export const uploadImagePreviewStyles = css`
 export const uploadAreaStyles = css`
   width: 100%;
   height: 250px;
-  backgroundcolor: ${color.softGrey};
+  background-color: ${color.softGrey};
   border: 2px solid ${color.hoverGrey};
   border-radius: 5px;
   display: flex;

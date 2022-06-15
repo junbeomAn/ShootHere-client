@@ -5,12 +5,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { css } from '@emotion/react';
 
-import { NavStyle } from './AddPlaceButton.styles';
+import { navStyle } from './AddPlaceButton.styles';
 import CustomButton from 'components/CustomButton/CustomButton.presenter';
 
 const AddPlaceButtonPresenter = () => {
   return (
-    <nav css={NavStyle}>
+    <nav css={navStyle}>
       <Link to='/addPlace'>
         <CustomButton
           css={css`

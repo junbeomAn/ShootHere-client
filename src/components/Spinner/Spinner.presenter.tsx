@@ -8,7 +8,7 @@ import { ISpinnerPresenter } from './Spinner.entity';
 import {
   LoadingSpinner,
   SpinnerContainer,
-  SpinnerMessageStyle,
+  spinnerMessageStyle,
 } from './Spinner.styles';
 
 export const SpinnerWithContainer = ({
@@ -18,7 +18,7 @@ export const SpinnerWithContainer = ({
   return (
     <SpinnerContainer absolute={absolute}>
       <LoadingSpinner />
-      <p css={SpinnerMessageStyle}>{message}</p>
+      <p css={spinnerMessageStyle}>{message}</p>
     </SpinnerContainer>
   );
 };

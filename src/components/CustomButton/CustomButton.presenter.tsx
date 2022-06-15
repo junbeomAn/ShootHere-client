@@ -3,7 +3,7 @@ import { css, jsx } from '@emotion/react';
 import * as React from 'react';
 
 import { ICustomButton } from './CustomButton.entity';
-import { GetCustomButtonStyle } from './CustomButton.styles';
+import { getCustomButtonStyle } from './CustomButton.styles';
 
 const CustomButton = ({
   size,
@@ -12,7 +12,7 @@ const CustomButton = ({
   ...otherProps
 }: ICustomButton) => {
   return (
-    <button css={GetCustomButtonStyle({ size, theme })} {...otherProps}>
+    <button css={getCustomButtonStyle({ size, theme })} {...otherProps}>
       {children}
     </button>
   );

@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import color from 'commonStyles/color';
 
-export const PlaceListStyle = css`
+export const placeListStyle = css`
   height: 100%;
   overflow: auto;
   border-right: 1px solid ${color.softGrey};
