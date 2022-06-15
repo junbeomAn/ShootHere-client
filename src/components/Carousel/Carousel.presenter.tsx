@@ -33,6 +33,8 @@ const CarouselPresenter = ({
   currentIndex,
   updateIndex,
 }: ICarouselPresenter) => {
+  const noImageAvailable = images.length === 0;
+
   const onImageIndicatorClick = (e: React.MouseEvent) => {
     const { id } = e.currentTarget;
     updateIndex(Number(id));
@@ -64,7 +66,7 @@ const CarouselPresenter = ({
         {placeName}
       </h2>
       <ImageContainer currentIndex={currentIndex}>
-        {images.length === 0 && (
+        {noImageAvailable && (
           <span css={messageStyles}>
             {placeName ? '현재 등록된 구장 이미지가 없습니다.' : <Spinner />}
           </span>
@@ -72,10 +74,16 @@ const CarouselPresenter = ({
         {getItems(images, createCarouselItemCb)}
       </ImageContainer>
       <div css={indicatorStyles}>
-        <button onClick={() => updateIndex(currentIndex - 1)}>
+        <button
+          disabled={noImageAvailable}
+          onClick={() => updateIndex(currentIndex - 1)}
+        >
           <MdOutlineArrowBackIos />
         </button>
-        <button onClick={() => updateIndex(currentIndex + 1)}>
+        <button
+          disabled={noImageAvailable}
+          onClick={() => updateIndex(currentIndex + 1)}
+        >
           <MdOutlineArrowForwardIos />
         </button>
       </div>
