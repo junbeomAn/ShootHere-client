@@ -41,9 +41,7 @@ export const PlaceItem = styled.div<IPlaceItemProps>`
 export const leftBoxStyle = css`
   width: 60%;
   height: 100%;
-  .left-box-item {
-    margin-bottom: 10px;
-  }
+
   .name {
     font-size: 1rem;
     font-weight: 700;
@@ -64,6 +62,9 @@ export const leftBoxStyle = css`
     width: 100%;
     height: 50%;
     margin-bottom: 10px;
+    .left-box-item {
+      margin-bottom: 10px;
+    }
   }
   ${mq.mobile} {
     height: 100%;
@@ -87,7 +88,7 @@ export const rightBoxStyle = css`
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
   .right-box-item {
     margin-bottom: 10px;
   }
@@ -101,6 +102,9 @@ export const rightBoxStyle = css`
         color: ${color.deepBlue};
       }
     }
+  }
+  .price {
+    white-space: nowrap;
   }
 
   ${mq.large} {
