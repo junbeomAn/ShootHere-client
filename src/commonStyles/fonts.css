@@ -1,5 +1,14 @@
 @font-face {
   font-family: AppleSDGothicNeo;
+  src: local(AppleSDGothicNeo-Bold),
+    url(../../assets/fonts/AppleSDGothicNeo-Bold.ttf) format('truetype');
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+}
+
+@font-face {
+  font-family: AppleSDGothicNeo;
   src: local(AppleSDGothicNeo-SemiBold),
     url(../../assets/fonts/AppleSDGothicNeo-SemiBold.ttf) format('truetype');
   font-weight: 600;
@@ -8,9 +17,17 @@
 }
 @font-face {
   font-family: AppleSDGothicNeo;
-  src: local(AppleSDGothicNeo-Bold),
-    url(../../assets/fonts/AppleSDGothicNeo-Bold.ttf) format('truetype');
-  font-weight: bold;
+  src: local(AppleSDGothicNeo-Normal),
+    url(../../assets/fonts/AppleSDGothicNeo-Normal.ttf) format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+}
+@font-face {
+  font-family: AppleSDGothicNeo;
+  src: local(AppleSDGothicNeo-Lighter),
+    url(../../assets/fonts/AppleSDGothicNeo-Lighter.ttf) format('truetype');
+  font-weight: lighter;
   font-style: normal;
   font-stretch: normal;
 }

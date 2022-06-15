@@ -2,6 +2,14 @@
 import { css } from '@emotion/react';
 import mq from 'commonStyles/mediaQuery';
 
+export const globalStyle = css`
+  body {
+    font-family: AppleSDGothicNeo, sans-serif;
+    font-size: 16px;
+    font-weight: normal;
+  }
+`;
+
 export const appStyle = css`
   display: flex;
   position: relative;
