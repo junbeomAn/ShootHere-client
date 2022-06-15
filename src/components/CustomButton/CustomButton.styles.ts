@@ -50,11 +50,21 @@ const getTheme = (theme: string): string => {
       return `
         background-color: ${color.deepBlue};
         color: white;
+        &:hover {
+          background-color: white;
+          color: ${color.deepBlue};
+          border: 1px solid ${color.deepBlue};
+        }
       `;
     default:
       return `
         background-color: ${color.deepBlue};
         color: white;
+        &:hover {
+          background-color: white;
+          color: ${color.deepBlue};
+          border: 1px solid ${color.deepBlue};
+        }
       `;
   }
 };
@@ -65,4 +75,5 @@ export const getCustomButtonStyle = (props: ICustomButton) => css`
   border-radius: 5px;
   border: none;
   cursor: pointer;
+  border: 1px solid transparent;
 `;
