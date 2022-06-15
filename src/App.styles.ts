@@ -1,5 +1,7 @@
 /** @jsx jsx */
 import { css } from '@emotion/react';
+
+import color from 'commonStyles/color';
 import mq from 'commonStyles/mediaQuery';
 
 export const globalStyle = css`
@@ -7,6 +9,7 @@ export const globalStyle = css`
     font-family: AppleSDGothicNeo, sans-serif;
     font-size: 16px;
     font-weight: normal;
+    color: ${color.textGrey};
   }
 `;
 
