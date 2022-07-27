@@ -1,17 +1,18 @@
 import * as React from 'react';
+import { observer } from 'mobx-react';
 
 import { dataActions } from 'components/FutsalApp/FutsalApp.actions';
 import FilterPresenter from './Filter.presenter';
 
-import { UserContext } from 'context/userContext';
-import { ModalContext } from 'context/modalContext';
 import { IFilterContainer } from './Filter.entity';
-
-const { useContext } = React;
+import { useStore } from '../../store';
+import { EModal } from 'store/store.entity';
 
 const FilterContainer = ({ onChange, dispatch, filter }: IFilterContainer) => {
-  const { user } = useContext(UserContext);
-  const { setIsOpen } = useContext(ModalContext);
+  const {
+    modalStore: { setModal },
+    userStore: { user },
+  } = useStore();
 
   const changeFilter = (newFilter: string) => {
     switch (newFilter) {
@@ -28,7 +29,7 @@ const FilterContainer = ({ onChange, dispatch, filter }: IFilterContainer) => {
 
   const onFilterClick = (e: React.MouseEvent) => {
     if (!user._id) {
-      setIsOpen(true);
+      setModal(EModal.LOGIN);
       return;
     }
     const { id } = e.currentTarget;
@@ -43,4 +44,4 @@ const FilterContainer = ({ onChange, dispatch, filter }: IFilterContainer) => {
   );
 };
 
-export default FilterContainer;
+export default observer(FilterContainer);

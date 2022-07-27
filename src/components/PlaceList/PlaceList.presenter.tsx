@@ -22,8 +22,6 @@ const NO_MORE_RESULTS = '더이상 불러올 풋살장이 없습니다.';
 
 const PlaceListPresenter = ({
   data,
-  images,
-  placeName,
   handlePlaceClick,
   isLoading,
   loadingRef,
@@ -62,9 +60,6 @@ const PlaceListPresenter = ({
           </div>
         }
       </div>
-      <Modal>
-        <Carousel placeName={placeName} images={images} />
-      </Modal>
     </>
   );
 };

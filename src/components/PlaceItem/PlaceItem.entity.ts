@@ -30,9 +30,3 @@ export interface IPlaceItemPresenter extends IPlaceItemContainer {
 export interface IPlaceItemProps {
   selected: boolean;
 }
-
-export interface ISaveButton {
-  isSaved: boolean;
-  placeId: string;
-  // onClick: (e: React.MouseEvent) => void;
-}

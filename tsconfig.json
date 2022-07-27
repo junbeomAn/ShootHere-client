@@ -12,7 +12,8 @@
     "noEmitOnError": true,
     "removeComments": true,
     "allowSyntheticDefaultImports": true,
-    "baseUrl": "./src"
+    "baseUrl": "./src",
+    "useDefineForClassFields": true
   },
   "include": ["src"],
   "exclude": [

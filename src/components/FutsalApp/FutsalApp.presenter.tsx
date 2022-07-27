@@ -1,8 +1,6 @@
 /** @jsx jsx */
 
 import { jsx, css } from '@emotion/react';
-import * as React from 'react';
-import { Link } from 'react-router-dom';
 import { isMobile } from 'react-device-detect';
 
 import PlaceList from 'components/PlaceList/PlaceList.container';
@@ -12,10 +10,9 @@ import Filter from 'components/Filter/Filter.container';
 import Modal from 'components/Modal/Modal.container';
 import AddPlaceButton from 'components/AddPlaceButton/AddPlaceButton.presenter';
 
-import { ModalContextProvider } from 'context/modalContext';
-
 import { IFutsalAppPresenter } from './FutsalApp.entity';
 import { futsalAppStyle, appLeftBoxStyle } from './FutsalApp.styles';
+import { EModal } from 'store/store.entity';
 
 const FutsalAppPresenter = ({
   onChange,
@@ -23,19 +20,22 @@ const FutsalAppPresenter = ({
   isLoading,
   filter,
   dispatch,
+  modalType,
 }: IFutsalAppPresenter) => {
+  const loginModal = modalType === EModal.LOGIN && (
+    <Modal width='300px' height='240px'>
+      <Login />
+    </Modal>
+  );
+
   return (
     <div css={futsalAppStyle}>
       <section css={appLeftBoxStyle}>
-        <ModalContextProvider>
-          <Filter onChange={onChange} dispatch={dispatch} filter={filter} />
-          <Modal width='300px' height='240px'>
-            <Login />
-          </Modal>
-        </ModalContextProvider>
-        <ModalContextProvider>
-          <PlaceList data={data} isLoading={isLoading} />
-        </ModalContextProvider>
+        <Filter onChange={onChange} dispatch={dispatch} filter={filter} />
+        {loginModal}
+
+        <PlaceList data={data} isLoading={isLoading} />
+
         {!isMobile && <AddPlaceButton />}
       </section>
       {!isMobile && <Map />}

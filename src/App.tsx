@@ -8,35 +8,27 @@ import AddPlace from 'components/AddPlace/AddPlace.container';
 import NotFound from 'components/NotFound/NotFound.presenter';
 import Footer from 'components/Footer/Footer.presenter';
 
-import { UserContextProvider } from 'context/userContext';
-import { PlaceContextProvider } from 'context/placeContext';
 import Logo from '../assets/image/logo_SH.png';
 
 import { appStyle, globalStyle, logoBoxStyle, logoStyle } from 'App.styles';
+import { StoreProvider } from 'store';
 
 export default function App() {
   const navigate = useNavigate();
   return (
-    <UserContextProvider>
+    <StoreProvider>
       <div css={appStyle}>
         <Global styles={globalStyle} />
         <div css={logoBoxStyle} onClick={() => navigate('/')}>
           <img src={Logo} css={logoStyle} />
         </div>
         <Routes>
-          <Route
-            path='/'
-            element={
-              <PlaceContextProvider>
-                <FutsalApp />
-              </PlaceContextProvider>
-            }
-          />
+          <Route path='/' element={<FutsalApp />} />
           <Route path='/addPlace' element={<AddPlace />} />
           <Route path='/*' element={<NotFound />} />
         </Routes>
         <Footer />
       </div>
-    </UserContextProvider>
+    </StoreProvider>
   );
 }

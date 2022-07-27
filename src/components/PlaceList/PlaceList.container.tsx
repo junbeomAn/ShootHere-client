@@ -1,14 +1,18 @@
 import * as React from 'react';
+import { observer } from 'mobx-react';
 
 import PlaceList from './PlaceList.presenter';
+import Modal from 'components/Modal/Modal.container';
+import Carousel from 'components/Carousel/Carousel.container';
 
 import { client } from 'api/client';
 import { getPlaceImagesQuery } from 'api/query';
-import { ModalContext } from 'context/modalContext';
 
 import { IPlaceListContainer, IPhoto, IPlaceImage } from './PlaceList.entity';
+import { useStore } from 'store';
+import { EModal } from 'store/store.entity';
 
-const { useState, useContext, useMemo, useRef, useEffect } = React;
+const { useState, useMemo, useRef, useEffect } = React;
 
 const ITEM_COUNT_PER_PAGE = 6;
 
@@ -17,7 +21,9 @@ const PlaceListContainer = ({ data, isLoading }: IPlaceListContainer) => {
   const [placeName, setPlaceName] = useState('');
   const [page, setPage] = useState(1);
 
-  const { setIsOpen } = useContext(ModalContext);
+  const {
+    modalStore: { setModal, modalType },
+  } = useStore();
   const loadingRef = useRef<HTMLDivElement>(null);
 
   // change data according to page, using usememo
@@ -32,7 +38,7 @@ const PlaceListContainer = ({ data, isLoading }: IPlaceListContainer) => {
 
   const handlePlaceClick = (placeId: string, name: string) => {
     resetCarouselData();
-    setIsOpen(true);
+    setModal(EModal.CAROUSEL);
 
     client.fetch<IPhoto[]>(getPlaceImagesQuery(placeId)).then((res) => {
       const [imageData] = res;
@@ -87,14 +93,19 @@ const PlaceListContainer = ({ data, isLoading }: IPlaceListContainer) => {
     setPage(1);
   }, [data]);
 
+  const carouselModal = modalType === EModal.CAROUSEL && (
+    <Modal>
+      <Carousel placeName={placeName} images={images} />
+    </Modal>
+  );
+
   return (
     <>
+      {carouselModal}
       <PlaceList
         data={dataWithCurrentPage}
         isLoading={isLoading}
         handlePlaceClick={handlePlaceClick}
-        images={images}
-        placeName={placeName}
         loadingRef={loadingRef}
         isLastPage={hasNextPage(page) === false}
       />
@@ -102,4 +113,4 @@ const PlaceListContainer = ({ data, isLoading }: IPlaceListContainer) => {
   );
 };
 
-export default PlaceListContainer;
+export default observer(PlaceListContainer);

@@ -4,20 +4,23 @@
 import { jsx } from '@emotion/react';
 import * as React from 'react';
 import { IoMdClose } from 'react-icons/io';
+import { observer } from 'mobx-react';
 
-import { ModalContext } from 'context/modalContext';
 import { stopPropagation } from 'utils';
 
 import { modalStyles, closeBtnStyles, ModalBox } from './Modal.styles';
 import { IModalContainer } from './Modal.entity';
+import { useStore } from 'store';
+import { EModal } from 'store/store.entity';
 
-const { useEffect, useContext } = React;
+const { useEffect } = React;
 
 const ModalContainer = ({ children, width, height }: IModalContainer) => {
-  const { isOpen, setIsOpen } = useContext(ModalContext);
-
+  const {
+    modalStore: { setModal },
+  } = useStore();
   const onClose = () => {
-    setIsOpen(false);
+    setModal(EModal.NONE);
   };
 
   const onEscapePress = (e: KeyboardEvent) => {
@@ -33,15 +36,13 @@ const ModalContainer = ({ children, width, height }: IModalContainer) => {
   }, []);
 
   return (
-    isOpen && (
-      <div css={modalStyles} onClick={stopPropagation(onClose)}>
-        <ModalBox onClick={stopPropagation()} width={width} height={height}>
-          <IoMdClose css={closeBtnStyles} onClick={onClose} />
-          {children}
-        </ModalBox>
-      </div>
-    )
+    <div css={modalStyles} onClick={stopPropagation(onClose)}>
+      <ModalBox onClick={stopPropagation()} width={width} height={height}>
+        <IoMdClose css={closeBtnStyles} onClick={onClose} />
+        {children}
+      </ModalBox>
+    </div>
   );
 };
 
-export default ModalContainer;
+export default observer(ModalContainer);

@@ -1,26 +1,28 @@
 import * as React from 'react';
 import { SWRConfig } from 'swr';
+import { observer } from 'mobx-react';
 
 import FutsalAppPresenter from './FutsalApp.presenter';
 
 import { client } from 'api/client';
 import { getPlaceSearchQuery } from 'api/query';
 import { Axios } from 'api/request';
-import { UserContext } from 'context/userContext';
 import { usePosition } from 'hooks';
 import { debounce, userUtils } from 'utils';
 
 import { IFilterState } from './FutsalApp.entity';
-import { IPlace } from '../PlaceItem/PlaceItem.entity';
+import { IPlace } from 'components/PlaceItem/PlaceItem.entity';
 import { ISaveRef } from 'components/Login/Login.entity';
 import FutsalAppReducer from './FutsalApp.reducer';
+import { useStore } from 'store';
+import { toJS } from 'mobx';
 
 const swrGlobalOptions = {
   revalidateOnFocus: false,
   dedupingInterval: 1000000,
 };
 
-const { useState, useContext, useReducer, useEffect } = React;
+const { useState, useReducer, useEffect } = React;
 
 const initialState: IFilterState = {
   filter: 'init',
@@ -34,8 +36,10 @@ const FutsalAppContainer = () => {
   const [currentCity, setCurrentCity] = useState('');
   const { lat, lng } = usePosition();
   const [{ filter }, dispatch] = useReducer(FutsalAppReducer, initialState);
-
-  const { user, setUser } = useContext(UserContext);
+  const {
+    modalStore: { modalType },
+    userStore: { user, setUser },
+  } = useStore();
 
   const onSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const currentQuery = e.target.value || currentCity;
@@ -121,10 +125,11 @@ const FutsalAppContainer = () => {
           data={filteredData}
           filter={filter}
           isLoading={isLoading}
+          modalType={toJS(modalType)}
         />
       </SWRConfig>
     </>
   );
 };
 
-export default FutsalAppContainer;
+export default observer(FutsalAppContainer);

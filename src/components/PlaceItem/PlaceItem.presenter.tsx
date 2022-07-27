@@ -1,87 +1,13 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/react';
-import * as React from 'react';
-import { AiOutlineStar, AiFillStar } from 'react-icons/ai';
-import { nanoid } from 'nanoid';
 
 import CustomButton from 'components/CustomButton/CustomButton.presenter';
-import Modal from 'components/Modal/Modal.container';
-import Login from 'components/Login/Login.container';
 
-import { client } from 'api/client';
 import { toPrice, stopPropagation, meterToKilometer } from 'utils';
-import { ModalContext, ModalContextProvider } from 'context/modalContext';
-import { UserContext } from 'context/userContext';
 
-import { IPlaceItemPresenter, ISaveButton } from './PlaceItem.entity';
-import {
-  rightBoxStyle,
-  leftBoxStyle,
-  PlaceItem,
-  getSaveButtonStyles,
-} from './PlaceItem.styles';
-
-const SaveButton = ({ isSaved, placeId }: ISaveButton) => {
-  const [mouseOver, setMouseOut] = React.useState(false);
-  const { setIsOpen } = React.useContext(ModalContext);
-  const { user, setUser } = React.useContext(UserContext);
-
-  const SaveStarBtn = isSaved || mouseOver ? AiFillStar : AiOutlineStar;
-
-  const savePlace = (saveIndex: number, placeId: string) => {
-    let commitRes;
-    if (saveIndex === -1) {
-      // not saved
-      console.log(`saved ${placeId} place`);
-      commitRes = client
-        .patch(user._id)
-        .insert('after', 'save[-1]', [
-          {
-            _type: 'save',
-            _ref: placeId,
-            _key: nanoid(),
-          },
-        ])
-        .commit();
-    } else {
-      // saved
-      console.log(`unsaved ${placeId} place`);
-      const savedPlaceToRemove = [
-        `save[${saveIndex}]`,
-        `save[_ref=="${placeId}"]`,
-      ];
-      commitRes = client.patch(user._id).unset(savedPlaceToRemove).commit();
-    }
-    commitRes.then((res) => {
-      console.log(res);
-      const { _type, _id, userName, save } = res;
-      setUser({ _type, _id, userName, save });
-    });
-  };
-
-  const handleSaveClick = (id: string) => {
-    if (!user._id) {
-      setIsOpen(true);
-      return;
-    }
-    const saveIndex = user.save.findIndex((item) => item._ref === id);
-    savePlace(saveIndex, id);
-  };
-
-  return (
-    <div
-      onMouseOver={() => setMouseOut(true)}
-      onMouseLeave={() => setMouseOut(false)}
-    >
-      <SaveStarBtn
-        css={getSaveButtonStyles(isSaved || mouseOver)}
-        onClick={stopPropagation(() => {
-          handleSaveClick(placeId);
-        })}
-      />
-    </div>
-  );
-};
+import { IPlaceItemPresenter } from './PlaceItem.entity';
+import { rightBoxStyle, leftBoxStyle, PlaceItem } from './PlaceItem.styles';
+import SaveButton from 'components/SaveButton/SaveButton.container';
 
 const PlaceItemPresenter = ({
   item,
@@ -109,12 +35,7 @@ const PlaceItemPresenter = ({
       <div css={leftBoxStyle}>
         <div className='left-box-item name'>
           {placeName}
-          <ModalContextProvider>
-            <Modal width='300px' height='240px'>
-              <Login />
-            </Modal>
-            <SaveButton isSaved={isSaved} placeId={_id} />
-          </ModalContextProvider>
+          <SaveButton isSaved={isSaved} placeId={_id} />
         </div>
         <div className='left-box-item address'>
           <span>{item.address}</span>

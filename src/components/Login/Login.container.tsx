@@ -5,20 +5,23 @@ import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import GoogleLogin, { GoogleLoginResponse } from 'react-google-login';
 import { FcGoogle } from 'react-icons/fc';
+import { observer } from 'mobx-react';
 
 import { client } from 'api/client';
-import { UserContext } from 'context/userContext';
-import { ModalContext } from 'context/modalContext';
 import userUtils from 'utils/user';
 
 import { IUser } from './Login.entity';
 
 import { loginBtnStyles, loginModalTitleStyles } from './Login.styles';
+import { useStore } from 'store';
+import { EModal } from 'store/store.entity';
 
 const Login = () => {
   const navigate = useNavigate();
-  const { setUser } = React.useContext(UserContext);
-  const { setIsOpen } = React.useContext(ModalContext);
+  const {
+    modalStore: { setModal },
+    userStore: { setUser },
+  } = useStore();
 
   const responseGoogleOnSuccess = (response: GoogleLoginResponse) => {
     if (response.googleId) {
@@ -34,7 +37,7 @@ const Login = () => {
       client.createIfNotExists(doc).then((res) => {
         userUtils.setUser(res);
         setUser(res);
-        setIsOpen(false);
+        setModal(EModal.NONE);
       });
     }
   };
@@ -73,4 +76,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default observer(Login);

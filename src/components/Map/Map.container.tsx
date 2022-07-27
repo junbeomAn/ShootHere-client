@@ -1,18 +1,22 @@
 import * as React from 'react';
+import { observer } from 'mobx-react';
 
 import MapPresenter from './Map.presenter';
 
 import { useMap, usePosition, usePath } from 'hooks';
 import { Axios } from 'api/request';
-import { PlaceContext } from 'context/placeContext';
 
 import { ICoords } from './Map.entity';
+import { useStore } from 'store';
 
 const MapContainer = () => {
   const [goalCoords, setGoalCoords] = React.useState<ICoords>({} as ICoords);
   const currentCoords = usePosition();
   const placeCache = React.useRef(new Map());
-  const place = React.useContext(PlaceContext);
+  const {
+    placeStore: { place },
+  } = useStore();
+
   const {
     data,
     isError,
@@ -54,4 +58,4 @@ const MapContainer = () => {
   );
 };
 
-export default MapContainer;
+export default observer(MapContainer);
