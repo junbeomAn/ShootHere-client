@@ -1,4 +1,5 @@
 /** @jsx jsx */
+/* @jsxFrag */
 import { css, Global, jsx } from '@emotion/react';
 import * as React from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
@@ -9,28 +10,23 @@ import Calendar from 'components/Calendar/Calendar.container';
 import NotFound from 'components/NotFound/NotFound.presenter';
 import Footer from 'components/Footer/Footer.presenter';
 
-import Logo from '../assets/image/logo_SH.png';
-
-import { appStyle, globalStyle, logoBoxStyle, logoStyle } from 'App.styles';
 import { StoreProvider } from 'store';
+import AppContainer from './App.container';
 
 export default function App() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   return (
     <StoreProvider>
-      <div css={appStyle}>
-        <Global styles={globalStyle} />
-        <div css={logoBoxStyle} onClick={() => navigate('/')}>
-          <img src={Logo} css={logoStyle} />
-        </div>
+      <>
         <Routes>
-          <Route path='/' element={<FutsalApp />} />
-          <Route path='/addPlace' element={<AddPlace />} />
-          <Route path='/reservation' element={<Calendar />} />
-          <Route path='/*' element={<NotFound />} />
+          <Route path='/' element={<AppContainer />}>
+            <Route path='/' element={<FutsalApp />} />
+            <Route path='addPlace' element={<AddPlace />} />
+            <Route path='reservation' element={<Calendar />} />
+            <Route path='*' element={<NotFound />} />
+          </Route>
         </Routes>
-        <Footer />
-      </div>
+      </>
     </StoreProvider>
   );
 }

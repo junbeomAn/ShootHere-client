@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 
 import color from 'commonStyles/color';
 import mq from 'commonStyles/mediaQuery';
@@ -30,19 +31,25 @@ export const appStyle = css`
   min-height: 100vh;
 `;
 
-export const logoBoxStyle = css`
+const LogoBox = styled.div<{ isHome: boolean }>`
   cursor: pointer;
   display: flex;
   align-items: center;
   margin: 40px 0 0 0;
+  ${({ isHome }) => (!isHome ? 'margin-top: 20px' : '')};
   ${mq.mobile} {
     top: 0px;
   }
 `;
 
-export const logoStyle = css`
-  width: 300px;
+const Logo = styled.img<{ isHome: boolean }>`
+  width: ${({ isHome }) => (isHome ? '300px' : '200px')};
   ${mq.mobile} {
     width: 200px;
   }
 `;
+
+export default {
+  LogoBox,
+  Logo,
+};
