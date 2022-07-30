@@ -6,3 +6,5 @@ export interface IXYCoords {
   x: number;
   y: number;
 }
+
+export type TAlignDirection = 'row' | 'col';

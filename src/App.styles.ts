@@ -10,6 +10,12 @@ export const globalStyle = css`
     font-size: 16px;
     font-weight: normal;
     color: ${color.textGrey};
+    h1,
+    h2,
+    h3,
+    h4 {
+      margin: 0;
+    }
   }
 `;
 
@@ -19,8 +25,9 @@ export const appStyle = css`
   align-items: center;
   flex-direction: column;
   justify-content: space-between;
-  height: 100vh;
-  min-height: 700px;
+  /* height: 100vh; */
+  /* min-height: 700px; */
+  min-height: 100vh;
 `;
 
 export const logoBoxStyle = css`

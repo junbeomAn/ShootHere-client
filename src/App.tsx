@@ -5,6 +5,7 @@ import { Route, Routes, useNavigate } from 'react-router-dom';
 
 import FutsalApp from 'components/FutsalApp/FutsalApp.container';
 import AddPlace from 'components/AddPlace/AddPlace.container';
+import Calendar from 'components/Calendar/Calendar.container';
 import NotFound from 'components/NotFound/NotFound.presenter';
 import Footer from 'components/Footer/Footer.presenter';
 
@@ -25,6 +26,7 @@ export default function App() {
         <Routes>
           <Route path='/' element={<FutsalApp />} />
           <Route path='/addPlace' element={<AddPlace />} />
+          <Route path='/reservation' element={<Calendar />} />
           <Route path='/*' element={<NotFound />} />
         </Routes>
         <Footer />
