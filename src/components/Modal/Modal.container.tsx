@@ -19,26 +19,26 @@ const ModalContainer = ({ children, width, height }: IModalContainer) => {
   const {
     modalStore: { setModal },
   } = useStore();
-  const onClose = () => {
+  const handleClose = () => {
     setModal(EModal.NONE);
   };
 
-  const onEscapePress = (e: KeyboardEvent) => {
+  const handleEscapePress = (e: KeyboardEvent) => {
     if (e.key === 'Escape') {
-      onClose();
+      handleClose();
     }
   };
 
   useEffect(() => {
-    window.addEventListener('keyup', onEscapePress);
+    window.addEventListener('keyup', handleEscapePress);
 
-    return () => window.removeEventListener('keyup', onEscapePress);
+    return () => window.removeEventListener('keyup', handleEscapePress);
   }, []);
 
   return (
-    <div css={modalStyles} onClick={stopPropagation(onClose)}>
+    <div css={modalStyles} onClick={stopPropagation(handleClose)}>
       <ModalBox onClick={stopPropagation()} width={width} height={height}>
-        <IoMdClose css={closeBtnStyles} onClick={onClose} />
+        <IoMdClose css={closeBtnStyles} onClick={handleClose} />
         {children}
       </ModalBox>
     </div>

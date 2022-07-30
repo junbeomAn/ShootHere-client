@@ -29,7 +29,7 @@ const TimePickerContainer = ({
     setEndTime('');
   };
 
-  const onTimeClick = (e: React.MouseEvent) => {
+  const handleTimeClick = (e: React.MouseEvent) => {
     // 모드 off 이면
     // 켠다
     // 시작 시간 세팅
@@ -59,14 +59,14 @@ const TimePickerContainer = ({
     setStartTime(time);
   };
 
-  const onMouseEnter = (e: React.MouseEvent) => {
+  const handleMouseEnter = (e: React.MouseEvent) => {
     // 모드 off 이면 리턴
     // pointing time setting
     if (!selectMode) return;
     setPointingTime((e.target as HTMLDivElement).innerText);
   };
 
-  const onMouseLeave = () => {
+  const handleMouseLeave = () => {
     // 모드 off 이면 리턴
     // pointing time to ''
     if (!selectMode) return;
@@ -89,9 +89,9 @@ const TimePickerContainer = ({
   return (
     <TimePickerPresenter
       times={times}
-      onTimeClick={onTimeClick}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
+      onTimeClick={handleTimeClick}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
       getSelected={getSelected}
       isActiveDate={isActiveDate}
       sameActiveWeek={sameActiveWeek}

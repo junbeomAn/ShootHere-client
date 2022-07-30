@@ -11,7 +11,7 @@ const DateContainer = ({
     calendarStore: { selectDate, setSelectDate },
   } = useStore();
 
-  const onDateClick = (date: number) => {
+  const handleDateClick = (date: number) => {
     if (Number.isNaN(date) || date === 0) return;
 
     setSelectDate(date);
@@ -24,7 +24,7 @@ const DateContainer = ({
       isHoliday={isHoliday}
       date={date}
       sameWithPrevActiveWeek={sameWithPrevActiveWeek}
-      onDateClick={onDateClick}
+      onDateClick={handleDateClick}
     />
   );
 };

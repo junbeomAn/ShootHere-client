@@ -34,13 +34,13 @@ const CalendarContainer = () => {
     setActiveWeek(-1);
   };
 
-  const onWeekClick = (e: React.MouseEvent) => {
+  const handleWeekClick = (e: React.MouseEvent) => {
     const { week } = (e.currentTarget as HTMLDivElement).dataset;
 
     setActiveWeek(Number(week));
   };
 
-  const onArrowClick = (nextMonth: number, dir: TDirection) => {
+  const handleArrowClick = (nextMonth: number, dir: TDirection) => {
     resetCalendar();
     setTranslateDirection(dir);
 
@@ -81,7 +81,7 @@ const CalendarContainer = () => {
       calendarDates={createCalendarDates(currYear, m)}
       activeWeek={currMonth === m ? activeWeek : -1}
       prevActiveWeek={prevActiveWeek}
-      onWeekClick={onWeekClick}
+      onWeekClick={handleWeekClick}
     />
   ));
 
@@ -90,7 +90,7 @@ const CalendarContainer = () => {
       <Indicator
         currMonth={currMonth}
         currYear={currYear}
-        onArrowClick={onArrowClick}
+        onArrowClick={handleArrowClick}
         translateDirection={translateDirection}
       />
       <S.Calendar>

@@ -41,7 +41,7 @@ const FutsalAppContainer = () => {
     userStore: { user, setUser },
   } = useStore();
 
-  const onSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const currentQuery = e.target.value || currentCity;
     debounce(getPlaces, currentQuery);
   };
@@ -120,7 +120,7 @@ const FutsalAppContainer = () => {
     <>
       <SWRConfig value={swrGlobalOptions}>
         <FutsalAppPresenter
-          onChange={onSearchChange}
+          onChange={handleSearchChange}
           dispatch={dispatch}
           data={filteredData}
           filter={filter}

@@ -33,7 +33,7 @@ const AddPlace = () => {
   });
   const {
     register,
-    handleSubmit,
+    handleSubmit: handleHooksFormSubmit,
     formState: { errors },
     watch,
     reset,
@@ -102,7 +102,7 @@ const AddPlace = () => {
     setImageAsset([]);
   };
 
-  const onSubmit = async (newData: IAddPlaceData) => {
+  const handleSubmit = async (newData: IAddPlaceData) => {
     setIsLoading(true);
     try {
       const { longitude, latitude } = await getNewPlaceCoords(newData.address);
@@ -132,7 +132,7 @@ const AddPlace = () => {
     );
   };
 
-  const onImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target;
     const { type, name } = files[0];
     try {
@@ -170,8 +170,8 @@ const AddPlace = () => {
     <>
       <AddPlacePresenter
         register={register}
-        handleSubmit={handleSubmit(onSubmit)}
-        onImageChange={onImageChange}
+        handleSubmit={handleHooksFormSubmit(handleSubmit)}
+        onImageChange={handleImageChange}
         errors={errors}
         isLoading={isLoading}
         isUploading={isUploading}

@@ -27,7 +27,7 @@ const FilterContainer = ({ onChange, dispatch, filter }: IFilterContainer) => {
     }
   };
 
-  const onFilterClick = (e: React.MouseEvent) => {
+  const handleFilterClick = (e: React.MouseEvent) => {
     if (!user._id) {
       setModal(EModal.LOGIN);
       return;
@@ -38,7 +38,7 @@ const FilterContainer = ({ onChange, dispatch, filter }: IFilterContainer) => {
   return (
     <FilterPresenter
       onChange={onChange}
-      onClick={onFilterClick}
+      onClick={handleFilterClick}
       filter={filter}
     />
   );

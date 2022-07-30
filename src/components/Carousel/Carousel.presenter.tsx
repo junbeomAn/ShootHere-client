@@ -35,7 +35,7 @@ const CarouselPresenter = ({
 }: ICarouselPresenter) => {
   const noImageAvailable = images.length === 0;
 
-  const onImageIndicatorClick = (e: React.MouseEvent) => {
+  const handleImageIndicatorClick = (e: React.MouseEvent) => {
     const { id } = e.currentTarget;
     updateIndex(Number(id));
   };
@@ -49,7 +49,7 @@ const CarouselPresenter = ({
       isActive={currentIndex === i}
       key={`${i}`}
       id={`${i}`}
-      onClick={onImageIndicatorClick}
+      onClick={handleImageIndicatorClick}
     >
       <img src={urlFor(item).url()} alt='place-photo' />
     </CarouselLabelBtn>
