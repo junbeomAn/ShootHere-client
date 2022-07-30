@@ -42,7 +42,6 @@ const SaveButtonContainer = ({ isSaved, placeId }: ISaveButton) => {
       commitRes = client.patch(user._id).unset(savedPlaceToRemove).commit();
     }
     commitRes.then((res) => {
-      console.log(res);
       const { _type, _id, userName, save } = res;
       setUser({ _type, _id, userName, save });
     });
