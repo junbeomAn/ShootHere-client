@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { SWRConfig } from 'swr';
+import useSWR from 'swr';
 import { observer } from 'mobx-react';
 
 import FutsalAppPresenter from './FutsalApp.presenter';
@@ -8,7 +8,7 @@ import { client } from 'api/client';
 import { getPlaceSearchQuery } from 'api/query';
 import { Axios } from 'api/request';
 import { usePosition } from 'hooks';
-import { debounce, userUtils } from 'utils';
+import { userUtils } from 'utils';
 
 import { IFilterState } from './FutsalApp.entity';
 import { IPlace } from 'components/PlaceItem/PlaceItem.entity';
@@ -16,11 +16,8 @@ import { ISaveRef } from 'components/Login/Login.entity';
 import FutsalAppReducer from './FutsalApp.reducer';
 import { useStore } from 'store';
 import { toJS } from 'mobx';
-
-const swrGlobalOptions = {
-  revalidateOnFocus: false,
-  dedupingInterval: 1000000,
-};
+import { sanityFetcher } from 'hooks/swrFetcher';
+import useDebounceValue from 'hooks/useDebounceValue';
 
 const { useState, useReducer, useEffect } = React;
 
@@ -30,38 +27,28 @@ const initialState: IFilterState = {
 
 const FutsalAppContainer = () => {
   // hook으로 빼는건 ..? usePlaces
-  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [data, setData] = useState([]);
   const [currentCity, setCurrentCity] = useState('');
+  const [search, setSearch] = useState('');
   const { lat, lng } = usePosition();
   const [{ filter }, dispatch] = useReducer(FutsalAppReducer, initialState);
   const {
     modalStore: { modalType },
     userStore: { user, setUser },
   } = useStore();
+  const debouncedQuery = useDebounceValue<string>(search || currentCity, 500);
+  const {
+    data = [],
+    error: placeError,
+    isValidating,
+  } = useSWR<IPlace[]>(
+    debouncedQuery ? getPlaceSearchQuery(debouncedQuery) : null,
+    sanityFetcher
+  );
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const currentQuery = e.target.value || currentCity;
-    debounce(getPlaces, currentQuery);
-  };
-
-  const getPlaces = (query: string) => {
-    if (!query) return;
-
-    setIsLoading(true);
-    client
-      .fetch(getPlaceSearchQuery(query))
-      .then((data) => {
-        setData(data);
-        dispatch({ type: 'INIT' });
-      })
-      .catch((error) => {
-        setError(error.message);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    setSearch(currentQuery);
   };
 
   const getCurrentCity = async (lat: number, lng: number) => {
@@ -107,27 +94,22 @@ const FutsalAppContainer = () => {
     getCurrentCity(lat, lng);
   }, [lat, lng]);
 
-  useEffect(() => {
-    getPlaces(currentCity);
-  }, [currentCity]);
-
   const filteredData = React.useMemo(
     () => getDataByFilter(data, filter),
     [data, filter]
   );
+  const isLoading = data.length === 0 || isValidating;
 
   return (
     <>
-      <SWRConfig value={swrGlobalOptions}>
-        <FutsalAppPresenter
-          onChange={handleSearchChange}
-          dispatch={dispatch}
-          data={filteredData}
-          filter={filter}
-          isLoading={isLoading}
-          modalType={toJS(modalType)}
-        />
-      </SWRConfig>
+      <FutsalAppPresenter
+        onChange={handleSearchChange}
+        dispatch={dispatch}
+        data={filteredData}
+        filter={filter}
+        isLoading={isLoading}
+        modalType={toJS(modalType)}
+      />
     </>
   );
 };

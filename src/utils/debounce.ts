@@ -1,7 +1,7 @@
 const debounce = (() => {
   let timeout: NodeJS.Timeout = null;
 
-  return (cb: Function, ...args: any) => {
+  return (cb: Function, delay: number, ...args: any) => {
     if (timeout) {
       clearTimeout(timeout);
     }
@@ -9,7 +9,7 @@ const debounce = (() => {
     timeout = setTimeout(() => {
       timeout = null;
       cb(...args);
-    }, 500);
+    }, delay);
   };
 })();
 

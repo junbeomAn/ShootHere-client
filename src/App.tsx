@@ -2,7 +2,8 @@
 /* @jsxFrag */
 import { css, Global, jsx } from '@emotion/react';
 import * as React from 'react';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
+import { SWRConfig, SWRConfiguration } from 'swr';
 
 import FutsalApp from 'components/FutsalApp/FutsalApp.container';
 import AddPlace from 'components/AddPlace/AddPlace.container';
@@ -14,19 +15,25 @@ import { StoreProvider } from 'store';
 import AppContainer from './App.container';
 
 export default function App() {
-  // const navigate = useNavigate();
+  const swrGlobalOptions: SWRConfiguration = {
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+    dedupingInterval: 1000000,
+  };
   return (
     <StoreProvider>
-      <>
-        <Routes>
-          <Route path='/' element={<AppContainer />}>
-            <Route path='/' element={<FutsalApp />} />
-            <Route path='addPlace' element={<AddPlace />} />
-            <Route path='reservation' element={<Calendar />} />
-            <Route path='*' element={<NotFound />} />
-          </Route>
-        </Routes>
-      </>
+      <SWRConfig value={swrGlobalOptions}>
+        <>
+          <Routes>
+            <Route path='/' element={<AppContainer />}>
+              <Route path='/' element={<FutsalApp />} />
+              <Route path='addPlace' element={<AddPlace />} />
+              <Route path='reservation' element={<Calendar />} />
+              <Route path='*' element={<NotFound />} />
+            </Route>
+          </Routes>
+        </>
+      </SWRConfig>
     </StoreProvider>
   );
 }

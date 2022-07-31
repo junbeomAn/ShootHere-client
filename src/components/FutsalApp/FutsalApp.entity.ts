@@ -3,12 +3,10 @@ import { IPlace } from 'components/PlaceItem/PlaceItem.entity';
 import { IBase } from 'commonEntity';
 import { TModal } from 'store/store.entity';
 
-type TPlaceArray = IPlace[];
-
 export interface IFutsalAppPresenter extends IBase {
   onChange: React.ChangeEventHandler;
   dispatch: React.Dispatch<IDataAction>;
-  data: TPlaceArray;
+  data: IPlace[];
   filter: string;
   modalType: TModal;
 }
