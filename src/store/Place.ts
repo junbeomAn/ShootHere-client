@@ -3,15 +3,19 @@ import { makeAutoObservable } from 'mobx';
 
 class PlaceStore {
   _rootStore: RootStore;
-  place: string = '';
+  placeAddress: string = '';
+  currentCity: string = '';
 
   constructor(rootStore: RootStore) {
     makeAutoObservable(this);
     this._rootStore = rootStore;
   }
 
-  setPlace = (newPlace: string) => {
-    this._rootStore.placeStore.place = newPlace;
+  setPlaceAddress = (newPlaceAddr: string) => {
+    this._rootStore.placeStore.placeAddress = newPlaceAddr;
+  };
+  setCurrentCity = (currCity: string) => {
+    this._rootStore.placeStore.currentCity = currCity;
   };
 }
 

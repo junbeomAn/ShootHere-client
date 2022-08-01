@@ -19,18 +19,22 @@ const PlaceItemContainer = ({
   const currentCoords = usePosition();
   const {
     userStore: { user },
-    placeStore: { place, setPlace },
+    placeStore: { placeAddress, setPlaceAddress },
   } = useStore();
+
+  const getNMapUrlScheme = () => {
+    return `
+    nmap://route/car?dlat=${item.latitude}&dlng=${
+      item.longitude
+    }&dname=${encodeURIComponent(item.placeName)}&appname=shoot-here
+    `;
+  };
 
   const handleDirectionsClick = (placeAddress: string) => {
     if (isMobile) {
-      window.location.href = `
-      nmap://route/car?dlat=${item.latitude}&dlng=${
-        item.longitude
-      }&dname=${encodeURIComponent(item.placeName)}&appname=shoot-here
-      `;
+      window.location.href = getNMapUrlScheme();
     } else {
-      setPlace(placeAddress);
+      setPlaceAddress(placeAddress);
     }
   };
 
@@ -51,7 +55,7 @@ const PlaceItemContainer = ({
   }, [currentCoords.lat]);
 
   const isSaved = !!user?.save?.find((place) => place._ref === item._id);
-  const isSelected = place === item.address;
+  const isSelected = placeAddress === item.address;
   // is saved 로 필터를 시킬 수있다.
 
   // memo로 불필요한 리렌더링 방지.. 특히 save 바뀔때 모든 아이템 리렌더링 최적화

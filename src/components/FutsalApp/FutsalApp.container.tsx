@@ -28,13 +28,13 @@ const initialState: IFilterState = {
 const FutsalAppContainer = () => {
   // hook으로 빼는건 ..? usePlaces
   const [error, setError] = useState(null);
-  const [currentCity, setCurrentCity] = useState('');
   const [search, setSearch] = useState('');
   const { lat, lng } = usePosition();
   const [{ filter }, dispatch] = useReducer(FutsalAppReducer, initialState);
   const {
     modalStore: { modalType },
     userStore: { user, setUser },
+    placeStore: { currentCity, setCurrentCity },
   } = useStore();
   const debouncedQuery = useDebounceValue<string>(search || currentCity, 500);
   const {
@@ -56,9 +56,8 @@ const FutsalAppContainer = () => {
     if (!lat || !lng) return;
     const url = `/api/map/address?lat=${lat}&lng=${lng}`;
     try {
-      const { data: address } = await Axios.get<string>(url);
-      console.log(address);
-      setCurrentCity(address);
+      const { data: city } = await Axios.get<string>(url);
+      setCurrentCity(city);
     } catch (err) {
       console.log(err);
       setError(err);
