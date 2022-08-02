@@ -1,6 +1,8 @@
 export interface ITimePickerContainer {
+  date: number;
+  month: number;
   isActiveDate: boolean;
-  sameActiveWeek: boolean;
+  sameWithPrevActiveWeek: boolean;
 }
 
 export interface ITimePickerPresenter {
@@ -10,7 +12,9 @@ export interface ITimePickerPresenter {
   onMouseLeave: () => void;
   getSelected: (time: string) => boolean;
   isActiveDate: boolean;
-  sameActiveWeek: boolean;
+  sameWithPrevActiveWeek: boolean;
   startTime: string;
   endTime: string;
+  date: number;
+  month: number;
 }

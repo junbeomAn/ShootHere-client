@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
 import { observer } from 'mobx-react';
 
@@ -18,7 +18,6 @@ const calendarWidth = 630;
 const CalendarContainer = () => {
   const [activeWeek, setActiveWeek] = useState(-1);
   const [translateDirection, setTranslateDirection] = useState<TDirection>('');
-  const prevActiveWeek = usePrevious(activeWeek);
   const {
     calendarStore: {
       currMonth,
@@ -77,16 +76,16 @@ const CalendarContainer = () => {
 
   const monthsCalendar = monthsToRender.map((m) => (
     <Dates
-      key={`${currYear}/${m}`}
+      key={`${currYear}-${m}-dates`}
+      month={m}
       calendarDates={createCalendarDates(currYear, m)}
       activeWeek={currMonth === m ? activeWeek : -1}
-      prevActiveWeek={prevActiveWeek}
       onWeekClick={handleWeekClick}
     />
   ));
 
   return (
-    <>
+    <S.CalendarWrapper>
       <Indicator
         currMonth={currMonth}
         currYear={currYear}
@@ -102,7 +101,7 @@ const CalendarContainer = () => {
           {monthsCalendar}
         </S.SliderBox>
       </S.Calendar>
-    </>
+    </S.CalendarWrapper>
   );
 };
 

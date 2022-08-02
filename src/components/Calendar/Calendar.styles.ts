@@ -36,7 +36,10 @@ const Calendar = styled.section`
   overflow: hidden;
 `;
 
+const CalendarWrapper = styled.div``;
+
 export default {
   SliderBox,
   Calendar,
+  CalendarWrapper,
 };

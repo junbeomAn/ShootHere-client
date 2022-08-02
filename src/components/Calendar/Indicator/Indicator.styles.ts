@@ -7,7 +7,7 @@ const Indicator = styled.div`
   width: 100px;
   justify-content: space-between;
   align-items: center;
-  margin: 30px 0;
+  margin: 30px auto;
 `;
 
 const IndicatorButton = styled.button<{

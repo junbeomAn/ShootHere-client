@@ -1,7 +1,8 @@
 export interface IDateContainer {
   date: number;
+  month: number;
   isHoliday: boolean;
-  sameWithPrevActiveWeek: boolean;
+  activeWeek: number;
 }
 
 export interface IDatePresenter {
@@ -9,5 +10,6 @@ export interface IDatePresenter {
   isHoliday: boolean;
   sameWithPrevActiveWeek: boolean;
   date: number;
+  month: number;
   onDateClick: (date: number) => void;
 }

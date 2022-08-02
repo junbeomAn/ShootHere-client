@@ -13,17 +13,18 @@ for (let i = start; i <= end; i++) {
 }
 
 const TimePickerContainer = ({
+  date,
+  month,
   isActiveDate,
-  sameActiveWeek,
+  sameWithPrevActiveWeek,
 }: ITimePickerContainer) => {
   const [selectMode, setSelectMode] = useState(false);
   const [pointingTime, setPointingTime] = useState('');
 
-  // const [startTime, setStartTime] = useState('');
-  // const [endTime, setEndTime] = useState('');
   const {
     calendarStore: { startTime, setStartTime, endTime, setEndTime },
   } = useStore();
+
   const resetTime = () => {
     setStartTime('');
     setEndTime('');
@@ -94,9 +95,11 @@ const TimePickerContainer = ({
       onMouseLeave={handleMouseLeave}
       getSelected={getSelected}
       isActiveDate={isActiveDate}
-      sameActiveWeek={sameActiveWeek}
+      sameWithPrevActiveWeek={sameWithPrevActiveWeek}
       startTime={startTime}
       endTime={endTime}
+      date={date}
+      month={month}
     />
   );
 };

@@ -4,10 +4,10 @@ import color from 'commonStyles/color';
 
 const TimePicker = styled.div<{
   isActiveDate: boolean;
-  sameActiveWeek: boolean;
+  sameWithPrevActiveWeek: boolean;
 }>`
-  transition: ${({ sameActiveWeek }) =>
-    sameActiveWeek ? 'none' : `all 0.15s ease-in-out`};
+  transition: ${({ sameWithPrevActiveWeek }) =>
+    sameWithPrevActiveWeek ? 'none' : `all 0.15s ease-in-out`};
   max-height: ${({ isActiveDate }) => (isActiveDate ? '320px' : '0')};
   overflow: hidden;
 `;

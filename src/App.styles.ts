@@ -36,7 +36,7 @@ const LogoBox = styled.div<{ isHome: boolean }>`
   display: flex;
   align-items: center;
   margin: 40px 0 0 0;
-  ${({ isHome }) => (!isHome ? 'margin-top: 20px' : '')};
+  ${({ isHome }) => (!isHome ? 'margin-top: 25px' : '')};
   ${mq.mobile} {
     top: 0px;
   }

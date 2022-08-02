@@ -14,7 +14,7 @@ const MapContainer = () => {
   const currentCoords = usePosition();
   const placeCache = React.useRef(new Map());
   const {
-    placeStore: { place },
+    placeStore: { placeAddress },
   } = useStore();
 
   const {
@@ -33,23 +33,23 @@ const MapContainer = () => {
     // place의 좌표값을 불러온다. api 요청
     // 좌표값 불러오는 프로세스 삭제해도 됨.
     const getGoalCoords = async () => {
-      if (!place) return;
-      const cacheData = placeCache.current.get(place);
+      if (!placeAddress) return;
+      const cacheData = placeCache.current.get(placeAddress);
 
       if (!cacheData) {
-        const encodedQuery = encodeURIComponent(place);
+        const encodedQuery = encodeURIComponent(placeAddress);
         const { data } = await Axios.get(
           `/api/map/coords?query=${encodedQuery}`
         );
 
-        placeCache.current.set(place, data[0]);
+        placeCache.current.set(placeAddress, data[0]);
         setGoalCoords({ lat: data[0].y, lng: data[0].x });
       } else {
         setGoalCoords({ lat: cacheData.y, lng: cacheData.x });
       }
     };
     getGoalCoords();
-  }, [place]);
+  }, [placeAddress]);
 
   return (
     <>

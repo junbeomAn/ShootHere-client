@@ -1,5 +1,6 @@
 import S from './TimePicker.styles';
 import { ITimePickerPresenter } from './TimePicker.entity';
+import { stopPropagation } from 'utils';
 
 const TimePickerPresenter = ({
   times,
@@ -8,9 +9,11 @@ const TimePickerPresenter = ({
   onMouseLeave,
   getSelected,
   isActiveDate,
-  sameActiveWeek,
+  sameWithPrevActiveWeek,
   startTime,
   endTime,
+  date,
+  month,
 }: ITimePickerPresenter) => {
   const slots = times.map((time) => {
     const displayTime = `${time.padStart(2, '0')} : 00`;
@@ -20,11 +23,11 @@ const TimePickerPresenter = ({
 
     return (
       <S.Slot
-        key={time.split(':').join('')}
+        key={`${month}-${date}-${time.split(':').join('')}`}
         isSelected={isSelected}
         isStart={isStart}
         isEnd={isEnd}
-        onClick={onTimeClick}
+        onClick={stopPropagation(onTimeClick)}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
       >
@@ -32,8 +35,12 @@ const TimePickerPresenter = ({
       </S.Slot>
     );
   });
+
   return (
-    <S.TimePicker isActiveDate={isActiveDate} sameActiveWeek={sameActiveWeek}>
+    <S.TimePicker
+      isActiveDate={isActiveDate}
+      sameWithPrevActiveWeek={sameWithPrevActiveWeek}
+    >
       {slots}
     </S.TimePicker>
   );

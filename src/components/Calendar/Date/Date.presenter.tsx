@@ -6,6 +6,7 @@ const DatePresenter = ({
   isActiveDate,
   isHoliday,
   date,
+  month,
   sameWithPrevActiveWeek,
   onDateClick,
 }: IDatePresenter) => {
@@ -14,8 +15,10 @@ const DatePresenter = ({
       <S.DateInner>
         <S.Date isHoliday={isHoliday}>{date || ''}</S.Date>
         <TimePicker
+          date={date}
+          month={month}
           isActiveDate={isActiveDate}
-          sameActiveWeek={sameWithPrevActiveWeek}
+          sameWithPrevActiveWeek={sameWithPrevActiveWeek}
         />
       </S.DateInner>
     </S.DateBox>

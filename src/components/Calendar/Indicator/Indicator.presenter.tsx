@@ -1,18 +1,13 @@
 import dayjs from 'dayjs';
 import localeData from 'dayjs/plugin/localeData';
 
-import { getNewYearMonth } from 'utils/date';
+import { getMonth, getNewYearMonth } from 'utils/date';
 
 import S from './Indicator.styles';
 
 import { IIndicatorPresenter } from './Indicator.entity';
 
 dayjs.extend(localeData);
-
-const getMonth = (mon: number) => {
-  const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-  return months[mon];
-};
 
 const IndicatorContainer = ({
   currMonth,

@@ -4,21 +4,25 @@ import { IWeekPresenter } from './Week.entity';
 import S from './Week.styles';
 
 const WeekPresenter = ({
+  month,
   week,
   weekIndex,
-  sameWithPrevActiveWeek,
   isActiveWeek,
   onWeekClick,
+  activeWeek,
 }: IWeekPresenter) => {
+  let extraKey = 0;
+
   const weeks = week.map((date, idx) => {
     const isHoliday = idx === 0;
 
     return (
       <Date
-        key={date}
+        key={`${month}-${date === 0 ? extraKey-- : date}-date`}
+        month={month}
         date={date}
         isHoliday={isHoliday}
-        sameWithPrevActiveWeek={sameWithPrevActiveWeek}
+        activeWeek={activeWeek}
       />
     );
   });

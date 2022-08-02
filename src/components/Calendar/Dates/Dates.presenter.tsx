@@ -8,14 +8,12 @@ import S from './Dates.styles';
 
 dayjs.extend(localeData);
 
-const DatesContainer = ({
+const DatesPresenter = ({
+  month,
   calendarDates,
   activeWeek,
-  prevActiveWeek,
   onWeekClick,
 }: IDatesPresenter) => {
-  const sameWithPrevActiveWeek = activeWeek === prevActiveWeek;
-
   return (
     <S.Dates>
       {calendarDates.map((week, i) => {
@@ -23,12 +21,13 @@ const DatesContainer = ({
 
         return (
           <Week
-            key={i}
+            key={`${month}-${i}-week`}
+            month={month}
             week={week}
             weekIndex={i}
             onWeekClick={onWeekClick}
-            sameWithPrevActiveWeek={sameWithPrevActiveWeek}
             isActiveWeek={isActiveWeek}
+            activeWeek={activeWeek}
           />
         );
       })}
@@ -36,4 +35,4 @@ const DatesContainer = ({
   );
 };
 
-export default DatesContainer;
+export default DatesPresenter;
