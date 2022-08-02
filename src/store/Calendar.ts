@@ -1,5 +1,5 @@
 import RootStore from './index';
-import { makeAutoObservable } from 'mobx';
+import { autorun, makeAutoObservable } from 'mobx';
 import dayjs from 'dayjs';
 
 const initMonth = dayjs().month();
@@ -25,6 +25,7 @@ class CalendarStore {
     this._rootStore.calendarStore.currYear = year;
   };
   setSelectDate = (selectDate: number) => {
+    this._rootStore.calendarStore.resetTime();
     this._rootStore.calendarStore.selectDate = selectDate;
   };
   setStartTime = (startTime: string) => {
@@ -32,6 +33,10 @@ class CalendarStore {
   };
   setEndTime = (endTime: string) => {
     this._rootStore.calendarStore.endTime = endTime;
+  };
+  resetTime = () => {
+    this._rootStore.calendarStore.setStartTime('');
+    this._rootStore.calendarStore.setEndTime('');
   };
 }
 

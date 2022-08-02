@@ -33,6 +33,7 @@ const Input = ({
         id={id}
         css={error ? inputErrorStyles(style) : inputStyles(style)}
         {...register?.(name, { required })}
+        name={name}
         {...otherProps}
       />
     </div>

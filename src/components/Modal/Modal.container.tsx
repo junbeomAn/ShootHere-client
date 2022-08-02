@@ -9,8 +9,9 @@ import { observer } from 'mobx-react';
 import { stopPropagation } from 'utils';
 
 import { modalStyles, closeBtnStyles, ModalBox } from './Modal.styles';
-import { IModalContainer } from './Modal.entity';
 import { useStore } from 'store';
+
+import { IModalContainer } from './Modal.entity';
 import { EModal } from 'store/store.entity';
 
 const { useEffect } = React;

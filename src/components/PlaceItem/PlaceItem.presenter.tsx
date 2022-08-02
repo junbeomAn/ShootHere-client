@@ -1,18 +1,20 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/react';
+import { Link } from 'react-router-dom';
 
 import CustomButton from 'components/CustomButton/CustomButton.presenter';
+import { rightBoxStyle, leftBoxStyle, PlaceItem } from './PlaceItem.styles';
+import SaveButton from 'components/SaveButton/SaveButton.container';
 
 import { toPrice, stopPropagation, meterToKilometer } from 'utils';
 
 import { IPlaceItemPresenter } from './PlaceItem.entity';
-import { rightBoxStyle, leftBoxStyle, PlaceItem } from './PlaceItem.styles';
-import SaveButton from 'components/SaveButton/SaveButton.container';
 
 const PlaceItemPresenter = ({
   item,
   handleDirectionsClick,
   handlePlaceClick,
+  handleReservationClick,
   isSaved,
   isSelected,
   distanceFromCurrentPosition,
@@ -59,15 +61,20 @@ const PlaceItemPresenter = ({
           <i className='fas fa-phone-volume'></i>({phoneNumber || ' - '})
         </div>
         <div className='right-box-item reservationPage'>
-          <i className='fab fa-internet-explorer'></i>(
-          {reservationPage ? (
+          <i className='fab fa-internet-explorer'></i>
+          <Link
+            to={'/reservation'}
+            onClick={stopPropagation(() => handleReservationClick(_id))}
+          >
+            예약하기
+          </Link>
+          {/* {reservationPage ? (
             <a target='_blank' href={reservationPage}>
               예약하기
             </a>
           ) : (
             ' - '
-          )}
-          )
+          )} */}
         </div>
         <div className='right-box-item price'>
           <i className='fas fa-won-sign'></i>

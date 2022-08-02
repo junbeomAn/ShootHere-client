@@ -22,6 +22,7 @@ export interface IPlaceItemContainer {
 }
 export interface IPlaceItemPresenter extends IPlaceItemContainer {
   handleDirectionsClick: (placeName: string) => void;
+  handleReservationClick: (id: string) => void;
   isSaved: boolean;
   isSelected: boolean;
   distanceFromCurrentPosition: number;

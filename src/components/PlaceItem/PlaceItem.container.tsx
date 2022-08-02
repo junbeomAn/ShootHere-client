@@ -20,6 +20,7 @@ const PlaceItemContainer = ({
   const {
     userStore: { user },
     placeStore: { placeAddress, setPlaceAddress },
+    reservationStore: { setPlaceId },
   } = useStore();
 
   const getNMapUrlScheme = () => {
@@ -36,6 +37,10 @@ const PlaceItemContainer = ({
     } else {
       setPlaceAddress(placeAddress);
     }
+  };
+
+  const handleReservationClick = (id: string) => {
+    setPlaceId(id);
   };
 
   const distanceFromCurrentPosition: number = useMemo(() => {
@@ -68,6 +73,7 @@ const PlaceItemContainer = ({
           item={item}
           handleDirectionsClick={handleDirectionsClick}
           handlePlaceClick={handlePlaceClick}
+          handleReservationClick={handleReservationClick}
           distanceFromCurrentPosition={distanceFromCurrentPosition}
         />
       </>

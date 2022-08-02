@@ -4,6 +4,8 @@ import ModalStore from './Modal';
 import PlaceStore from './Place';
 import UserStore from './User';
 import CalendarStore from './Calendar';
+import ReservationStore from './Reservation';
+import { reservationDb } from '../firebase';
 
 const { createContext, useContext } = React;
 
@@ -12,12 +14,14 @@ class RootStore {
   placeStore: PlaceStore;
   userStore: UserStore;
   calendarStore: CalendarStore;
+  reservationStore: ReservationStore;
 
   constructor() {
     this.modalStore = new ModalStore(this);
     this.placeStore = new PlaceStore(this);
     this.userStore = new UserStore(this);
     this.calendarStore = new CalendarStore(this);
+    this.reservationStore = new ReservationStore(this, reservationDb);
   }
 }
 

@@ -23,6 +23,15 @@ export function createQueryString<
 
 export const meterToKilometer = (dist: number) => (dist / 1000).toFixed(1);
 
+export const getFormValues = (form: HTMLFormElement, formNames: string[]) => {
+  const res: { [key: string]: string } = {};
+
+  formNames.forEach((name) => {
+    res[name] = (form[name] as HTMLInputElement).value;
+  });
+  return res;
+};
+
 export { default as debounce } from './debounce';
 export { default as userUtils } from './user';
 export { default as stopPropagation } from './stopPropagation';

@@ -7,12 +7,11 @@ import { SWRConfig, SWRConfiguration } from 'swr';
 
 import FutsalApp from 'components/FutsalApp/FutsalApp.container';
 import AddPlace from 'components/AddPlace/AddPlace.container';
-import Calendar from 'components/Calendar/Calendar.container';
 import NotFound from 'components/NotFound/NotFound.presenter';
-import Footer from 'components/Footer/Footer.presenter';
+import Reservation from 'components/Reservation/Reservation.container';
+import AppContainer from './App.container';
 
 import { StoreProvider } from 'store';
-import AppContainer from './App.container';
 
 export default function App() {
   const swrGlobalOptions: SWRConfiguration = {
@@ -28,7 +27,7 @@ export default function App() {
             <Route path='/' element={<AppContainer />}>
               <Route path='/' element={<FutsalApp />} />
               <Route path='addPlace' element={<AddPlace />} />
-              <Route path='reservation' element={<Calendar />} />
+              <Route path='reservation' element={<Reservation />} />
               <Route path='*' element={<NotFound />} />
             </Route>
           </Routes>

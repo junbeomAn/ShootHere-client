@@ -44,7 +44,7 @@ const PlaceListPresenter = ({
           <span css={emptyResultStyles}>{NO_RESULT_MSG}</span>
         )}
         {getPlaceList()}
-        {isLastPage && !isLoading && <NoMorePageMessage />}
+        {/* {isLastPage && !isLoading && <NoMorePageMessage />} */}
         {
           <div ref={loadingRef} css={spinnerCustomContainerStyles}>
             {(!isLastPage || isLoading) && (
