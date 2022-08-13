@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState, useEffect, useRef } from 'react';
 import useSWR from 'swr';
 
 import { getFetcher } from './swrFetcher';
@@ -27,31 +27,35 @@ export const usePath = (coords: IPathCoords): IUsePathResponse => {
 };
 
 export const usePosition = () => {
-  const [currentCoords, setCurrentCoords] = React.useState<ICoords>(
-    {} as ICoords
-  );
+  const [currentCoords, setCurrentCoords] = useState<ICoords>({} as ICoords);
+  const mountedRef = useRef(true);
 
-  React.useEffect(() => {
+  useEffect(() => {
+    mountedRef.current = true;
     const initCurrentPosition = () => {
       navigator.geolocation.getCurrentPosition((position) => {
         const { latitude, longitude } = position.coords;
-        if (!currentCoords.lat) {
+        const mounted = mountedRef.current;
+        if (!currentCoords.lat && mounted) {
           setCurrentCoords({ lat: latitude, lng: longitude });
         }
       });
     };
     initCurrentPosition();
+    return () => {
+      mountedRef.current = false;
+    };
   }, []);
 
   return { ...currentCoords };
 };
 
 export const useMap = (path: ICoordsArray, coords: ICoords) => {
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   let map: naver.maps.Map = null;
 
-  React.useEffect(() => {
+  useEffect(() => {
     const initializeMap = () => {
       map = new naver.maps.Map('map', {
         center: new naver.maps.LatLng(coords.lat, coords.lng),
