@@ -1,6 +1,7 @@
-import * as React from 'react';
+import { useState, useReducer, useEffect, useMemo } from 'react';
 import useSWR from 'swr';
 import { observer } from 'mobx-react';
+import { toJS } from 'mobx';
 
 import FutsalAppPresenter from './FutsalApp.presenter';
 
@@ -9,17 +10,15 @@ import { getPlaceSearchQuery } from 'api/query';
 import { Axios } from 'api/request';
 import { usePosition } from 'hooks';
 import { userUtils } from 'utils';
+import useDebounceValue from 'hooks/useDebounceValue';
+import { sanityFetcher } from 'hooks/swrFetcher';
+import useMounted from 'hooks/useMounted';
+import { useStore } from 'store';
 
 import { IFilterState } from './FutsalApp.entity';
 import { IPlace } from 'components/PlaceItem/PlaceItem.entity';
 import { ISaveRef } from 'components/Login/Login.entity';
 import FutsalAppReducer from './FutsalApp.reducer';
-import { useStore } from 'store';
-import { toJS } from 'mobx';
-import { sanityFetcher } from 'hooks/swrFetcher';
-import useDebounceValue from 'hooks/useDebounceValue';
-
-const { useState, useReducer, useEffect } = React;
 
 const initialState: IFilterState = {
   filter: 'init',
@@ -45,6 +44,7 @@ const FutsalAppContainer = () => {
     debouncedQuery ? getPlaceSearchQuery(debouncedQuery) : null,
     sanityFetcher
   );
+  const mountedRef = useMounted();
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const currentQuery = e.target.value || currentCity;
@@ -53,11 +53,14 @@ const FutsalAppContainer = () => {
 
   const getCurrentCity = async (lat: number, lng: number) => {
     // useAxios 대체가능
+
     if (!lat || !lng) return;
     const url = `/api/map/address?lat=${lat}&lng=${lng}`;
     try {
       const { data: city } = await Axios.get<string>(url);
-      setCurrentCity(city);
+      if (mountedRef.current) {
+        setCurrentCity(city);
+      }
     } catch (err) {
       console.log(err);
       setError(err);
@@ -83,8 +86,10 @@ const FutsalAppContainer = () => {
       client.getDocument(localUser._id).then((user) => {
         const { _type, _id, userName, save } = user;
         const userInfo = { _type, _id, userName, save };
-        setUser(userInfo);
-        userUtils.setUser(userInfo);
+        if (mountedRef.current) {
+          setUser(userInfo);
+          userUtils.setUser(userInfo);
+        }
       });
     }
   }, []);
@@ -93,7 +98,7 @@ const FutsalAppContainer = () => {
     getCurrentCity(lat, lng);
   }, [lat, lng]);
 
-  const filteredData = React.useMemo(
+  const filteredData = useMemo(
     () => getDataByFilter(data, filter),
     [data, filter]
   );

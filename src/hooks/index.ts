@@ -9,6 +9,7 @@ import {
   ICoords,
   IUsePathResponse,
 } from './hooks.entity';
+import useMounted from './useMounted';
 
 export const usePath = (coords: IPathCoords): IUsePathResponse => {
   const { startLng, startLat, goalLng, goalLat } = coords;
@@ -28,10 +29,9 @@ export const usePath = (coords: IPathCoords): IUsePathResponse => {
 
 export const usePosition = () => {
   const [currentCoords, setCurrentCoords] = useState<ICoords>({} as ICoords);
-  const mountedRef = useRef(true);
+  const mountedRef = useMounted();
 
   useEffect(() => {
-    mountedRef.current = true;
     const initCurrentPosition = () => {
       navigator.geolocation.getCurrentPosition((position) => {
         const { latitude, longitude } = position.coords;
@@ -42,9 +42,6 @@ export const usePosition = () => {
       });
     };
     initCurrentPosition();
-    return () => {
-      mountedRef.current = false;
-    };
   }, []);
 
   return { ...currentCoords };
