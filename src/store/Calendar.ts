@@ -38,6 +38,12 @@ class CalendarStore {
     this._rootStore.calendarStore.setStartTime('');
     this._rootStore.calendarStore.setEndTime('');
   };
+  resetCalendar = () => {
+    this._rootStore.calendarStore.resetTime();
+    this._rootStore.calendarStore.currMonth = initMonth;
+    this._rootStore.calendarStore.currYear = initYear;
+    this._rootStore.calendarStore.selectDate = -1;
+  };
 }
 
 export default CalendarStore;

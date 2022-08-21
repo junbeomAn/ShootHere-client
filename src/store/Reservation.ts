@@ -42,10 +42,17 @@ class ReservationStore {
       endTime,
     };
   };
+  resetReservationData = () => {
+    this._rootStore.reservationStore.setPlaceId('');
+    this._rootStore.reservationStore.reservation = {} as TReservation;
+  };
   createReservation = (userId: string) => {
     const r = this._rootStore.reservationStore.reservation;
 
     this._rootStore.reservationStore.db.write(r, userId);
+  };
+  getUserReservation = (userId: string) => {
+    this._rootStore.reservationStore.db.getUserReservation(userId);
   };
 }
 

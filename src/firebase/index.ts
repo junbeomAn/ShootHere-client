@@ -1,4 +1,13 @@
-import { getDatabase, set, ref, Database } from 'firebase/database';
+import {
+  getDatabase,
+  set,
+  ref,
+  Database,
+  get,
+  query,
+  orderByChild,
+  equalTo,
+} from 'firebase/database';
 import { initializeApp } from 'firebase/app';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -36,6 +45,19 @@ export class ReservationDB<T> {
       ...reservation,
       userId,
     });
+  };
+
+  getUserReservation = async (userId: string) => {
+    if (!userId) {
+      throw new Error('Login required!');
+    }
+    const q = query(
+      ref(this.db, 'reservation'),
+      orderByChild('userId'),
+      equalTo(userId)
+    );
+    const res = await get(q);
+    console.log(res.val());
   };
 }
 

@@ -18,11 +18,19 @@ const ReservationContainer = () => {
     reservationStore: {
       placeId,
       setReservation,
+      resetReservationData,
       reservation,
       createReservation,
     },
     placeStore: { currentCity },
-    calendarStore: { startTime, endTime, currMonth, currYear, selectDate },
+    calendarStore: {
+      startTime,
+      endTime,
+      currMonth,
+      currYear,
+      selectDate,
+      resetCalendar,
+    },
     modalStore: { modalType, setModal },
   } = useStore();
   const {
@@ -52,21 +60,35 @@ const ReservationContainer = () => {
     setModal(EModal.PAY);
   };
 
+  const cleanUpLastReservation = () => {
+    resetReservationData();
+    resetCalendar();
+    setModal(EModal.NONE);
+  };
+
   const handleConfirmPayment = () => {
     // reset reservation
     // reset placeId
     // modal close
     // navigate to home
+
     // calendar reset -> start, end time,  curr month, year, selected date
     //
     console.log('payment success');
     const user = userUtils.getUser();
-
     createReservation(user._id);
+    cleanUpLastReservation();
+    navigate('/', { replace: true }); // cannot go back to last history
   };
 
   useEffect(() => {
     if (!placeId) navigate('/', { replace: true });
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      cleanUpLastReservation();
+    };
   }, []);
 
   const placeToReserve = data.find((item) => item._id === placeId);
